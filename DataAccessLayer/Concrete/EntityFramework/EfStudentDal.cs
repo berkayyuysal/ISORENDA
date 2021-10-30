@@ -45,7 +45,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
         {
             using (IsorendaContext context = new IsorendaContext())
             {
-                return context.Set<Student>().SingleOrDefault();
+                return context.Set<Student>().Where(filter).SingleOrDefault();
             }
         }
 
