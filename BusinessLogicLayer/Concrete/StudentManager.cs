@@ -48,7 +48,7 @@ namespace BusinessLogicLayer.Concrete
             return true;
         }
 
-        public List<Student> GetStudentsByFilter(Student student)
+        public List<Student> GetStudentsByNameAndGender(Student student)
         {
             return _studentDal.GetAll(s => s.StudentName == student.StudentName && s.StudentGender == student.StudentGender);
         }
