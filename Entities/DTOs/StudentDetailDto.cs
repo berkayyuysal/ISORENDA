@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Student:IEntity
+    public class StudentDetailDto:IDto
     {
         public Guid StudentId { get; set; }
         public string StudentName { get; set; }
-        public string StudentSurname { get; set; }
-        public int StudentGender { get; set; }
+        public string TeacherName { get; set; }
+
+        public int Gender { get; set; }
     }
 }

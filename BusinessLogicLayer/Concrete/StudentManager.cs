@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Abstract;
 using DataAccessLayer.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,6 +52,11 @@ namespace BusinessLogicLayer.Concrete
         public List<Student> GetStudentsByNameAndGender(Student student)
         {
             return _studentDal.GetAll(s => s.StudentName == student.StudentName && s.StudentGender == student.StudentGender);
+        }
+
+        public List<StudentDetailDto> GetStudentDetails()
+        {
+            return _studentDal.GetStudentDetails();
         }
     }
 }
