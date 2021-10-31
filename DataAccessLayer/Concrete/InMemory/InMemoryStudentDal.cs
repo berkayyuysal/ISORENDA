@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,11 @@ namespace DataAccessLayer.Concrete.InMemory
         }
 
         public Student GetOne(Expression<Func<Student, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<StudentDetailDto> GetStudentDetails()
         {
             throw new NotImplementedException();
         }
