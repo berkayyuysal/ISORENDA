@@ -34,22 +34,21 @@ namespace ConsoleUI
         private static void StudentTest()
         {
             StudentManager studentManager = new StudentManager(new EfStudentDal());
+            var result = studentManager.GetAllStudents();
             string gender = String.Empty;
-            foreach (var student in studentManager.GetStudentDetails())
+            if (result.IsSuccess)
             {
-                if (student.Gender == 0)
+                foreach (var student in result.Data)
                 {
-                    gender = "Erkek";
+                    Console.WriteLine(student.StudentName);
+                    Console.WriteLine("-----------------------------------------------");
                 }
-                else
-                {
-                    gender = "Kadın";
-                }
-                Console.WriteLine("Öğrenci Adı:" + student.StudentName + " " +"Öğretmen Adı:" + student.TeacherName + " " + "Öğretmen ve öğrenci cinsiyeti:" + " " + gender + " " + student.Gender);
-                //Console.WriteLine("Soyadı:" + student.StudentSurname.ToString());
-                //Console.WriteLine("Cinsiyet:" + gender);
-                Console.WriteLine("-----------------------------------------------");
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
             Console.ReadLine();
         }
     }

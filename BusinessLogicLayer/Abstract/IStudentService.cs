@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ namespace BusinessLogicLayer.Abstract
 {
     public interface IStudentService
     {
-        Student GetStudentById(Student student);
-        List<Student> GetStudentsByNameAndGender(Student student);
-        List<Student> GetAllStudents();
-        bool AddStudent(Student student);
-        bool UpdateStudent(Student student);
-        bool DeleteStudent(Student student);
-        List<StudentDetailDto> GetStudentDetails();
+        IDataResult<Student> GetStudentById(Student student);
+        IDataResult<List<Student>> GetStudentsByNameAndGender(Student student);
+        IDataResult<List<Student>> GetAllStudents();
+        IDataResult<List<StudentDetailDto>> GetStudentDetails();
+        IResult AddStudent(Student student);
+        IResult UpdateStudent(Student student);
+        IResult DeleteStudent(Student student);
     }
 }
