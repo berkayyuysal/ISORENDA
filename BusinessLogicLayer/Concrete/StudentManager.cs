@@ -1,4 +1,6 @@
 ﻿using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.Constants;
+using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -16,47 +18,56 @@ namespace BusinessLogicLayer.Concrete
             _studentDal = studentDal;
         }
 
-        public Student GetStudentById(Student student)
+        public IDataResult<Student> GetStudentById(Student student)
         {
             // İş kodları
-            return _studentDal.GetOne(s=> s.StudentId == student.StudentId);
+            return new SuccessDataResult<Student>(_studentDal.GetOne(s => s.StudentId == student.StudentId));
         }
 
-        public List<Student> GetAllStudents()
+        public IDataResult<List<Student>> GetAllStudents()
         {
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Student>>(Messages.MaintenanceTime);
+            }
             // İş kodları
-            return _studentDal.GetAll();
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(), Messages.StudentsListed);
         }
 
-        public bool AddStudent(Student student)
+        public IDataResult<List<Student>> GetStudentsByNameAndGender(Student student)
+        {
+            return new SuccessDataResult<List<Student>>
+                (_studentDal.GetAll(s => s.StudentName == student.StudentName && s.StudentGender == student.StudentGender));
+        }
+
+        public IDataResult<List<StudentDetailDto>> GetStudentDetails()
+        {
+            return new SuccessDataResult<List<StudentDetailDto>>(_studentDal.GetStudentDetails());
+        }
+
+        public IResult AddStudent(Student student)
         {
             // İş kodları
+            if (student.StudentName.Length < 2)
+            {
+                return new ErrorResult(Messages.StudentNameInvalid);
+            }
             _studentDal.Add(student);
-            return true;
+            return new SuccessResult(Messages.StudentAdded);
         }
 
-        public bool DeleteStudent(Student student)
+        public IResult DeleteStudent(Student student)
         {
             // İş kodları
             _studentDal.Delete(student);
-            return true;
+            return new SuccessResult();
         }
 
-        public bool UpdateStudent(Student student)
+        public IResult UpdateStudent(Student student)
         {
             // İş kodları
             _studentDal.Update(student);
-            return true;
-        }
-
-        public List<Student> GetStudentsByNameAndGender(Student student)
-        {
-            return _studentDal.GetAll(s => s.StudentName == student.StudentName && s.StudentGender == student.StudentGender);
-        }
-
-        public List<StudentDetailDto> GetStudentDetails()
-        {
-            return _studentDal.GetStudentDetails();
+            return new SuccessResult();
         }
     }
 }
