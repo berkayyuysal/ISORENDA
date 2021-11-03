@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataAccessLayer.Concrete.EntityFramework
 {
-    public class EfTeacherDal: EfEntityRepositoryBase<Teacher, IsorendaContext>, ITeacherDal
+    public class EfTeacherDal : EfEntityRepositoryBase<Teacher, IsorendaContext>, ITeacherDal
     {
     }
 }

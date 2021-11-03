@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Abstract;
+using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,11 +17,11 @@ namespace BusinessLogicLayer.Concrete
             _teacherDal = teacherDal;
         }
 
-        public bool AddTeacher(Teacher teacher)
+        public IResult AddTeacher(Teacher teacher)
         {
             // İş kodları
             _teacherDal.Add(teacher);
-            return true;
+            return new SuccessResult();
         }
     }
 }

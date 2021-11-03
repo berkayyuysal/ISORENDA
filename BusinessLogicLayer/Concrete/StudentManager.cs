@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Abstract;
-using BusinessLogicLayer.Constants;
+using BusinessLogicLayer.Constants.Messages;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 using Entities.Concrete;
@@ -18,20 +18,20 @@ namespace BusinessLogicLayer.Concrete
             _studentDal = studentDal;
         }
 
-        public IDataResult<Student> GetStudentById(Student student)
+        public IDataResult<Student> GetStudentById(Guid id)
         {
             // İş kodları
-            return new SuccessDataResult<Student>(_studentDal.GetOne(s => s.StudentId == student.StudentId));
+            return new SuccessDataResult<Student>(_studentDal.GetOne(s => s.StudentId == id));
         }
 
         public IDataResult<List<Student>> GetAllStudents()
         {
-            if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 00)
             {
-                return new ErrorDataResult<List<Student>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<Student>>(ServerMessages.MaintenanceTime);
             }
             // İş kodları
-            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(), Messages.StudentsListed);
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(), StudentMessages.StudentsListed);
         }
 
         public IDataResult<List<Student>> GetStudentsByNameAndGender(Student student)
@@ -50,10 +50,10 @@ namespace BusinessLogicLayer.Concrete
             // İş kodları
             if (student.StudentName.Length < 2)
             {
-                return new ErrorResult(Messages.StudentNameInvalid);
+                return new ErrorResult(StudentMessages.StudentNameInvalid);
             }
             _studentDal.Add(student);
-            return new SuccessResult(Messages.StudentAdded);
+            return new SuccessResult(StudentMessages.StudentAdded);
         }
 
         public IResult DeleteStudent(Student student)
