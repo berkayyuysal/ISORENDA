@@ -10,8 +10,29 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            StudentTest();
+            CourseTest();
+            //StudentTest();
             //TeacherTest();
+        }
+
+        private static void CourseTest()
+        {
+            CourseManager c = new CourseManager(new EfCourseDal());
+            Course course = new Course
+            {
+                CourseId = new Guid(),
+                CourseName = "Hafıza Teknikleri"
+            };
+            var a = c.AddCourse(course);
+
+            if (a.IsSuccess)
+            {
+                Console.WriteLine("owww yeaa");
+            }
+            else
+            {
+                Console.WriteLine("fuckkk");
+            }
         }
 
         private static void TeacherTest()
@@ -24,7 +45,7 @@ namespace ConsoleUI
                 TeacherSurname = "DenemeSoyad1",
                 TeacherGender = 0
             };
-            if (t.AddTeacher(teacher))
+            if (t.AddTeacher(teacher).IsSuccess)
             {
                 Console.WriteLine("eklendiii whoo");
             }

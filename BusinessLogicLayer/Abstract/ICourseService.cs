@@ -6,8 +6,8 @@ using System.Text;
 
 namespace BusinessLogicLayer.Abstract
 {
-    public interface ITeacherService
+    public interface ICourseService
     {
-        IResult AddTeacher(Teacher teacher);
+        IResult AddCourse(Course course);
     }
 }

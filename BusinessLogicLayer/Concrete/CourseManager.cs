@@ -8,19 +8,17 @@ using System.Text;
 
 namespace BusinessLogicLayer.Concrete
 {
-    public class TeacherManager : ITeacherService
+    public class CourseManager : ICourseService
     {
-        ITeacherDal _teacherDal;
-
-        public TeacherManager(ITeacherDal teacherDal)
+        ICourseDal _courseDal;
+        public CourseManager(ICourseDal courseDal)
         {
-            _teacherDal = teacherDal;
+            _courseDal = courseDal;
         }
 
-        public IResult AddTeacher(Teacher teacher)
+        public IResult AddCourse(Course course)
         {
-            // İş kodları
-            _teacherDal.Add(teacher);
+            _courseDal.Add(course);
             return new SuccessResult();
         }
     }

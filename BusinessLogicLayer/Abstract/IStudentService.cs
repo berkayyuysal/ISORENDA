@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Abstract
 {
     public interface IStudentService
     {
-        IDataResult<Student> GetStudentById(Student student);
+        IDataResult<Student> GetStudentById(Guid id);
         IDataResult<List<Student>> GetStudentsByNameAndGender(Student student);
         IDataResult<List<Student>> GetAllStudents();
         IDataResult<List<StudentDetailDto>> GetStudentDetails();
