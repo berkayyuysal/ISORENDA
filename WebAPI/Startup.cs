@@ -30,8 +30,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IStudentService, StudentManager>();
-            services.AddSingleton<IStudentDal, EfStudentDal>();
+            //services.AddSingleton<IStudentService, StudentManager>();
+            //services.AddSingleton<IStudentDal, EfStudentDal>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

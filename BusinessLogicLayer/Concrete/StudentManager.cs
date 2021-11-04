@@ -1,9 +1,13 @@
 ﻿using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,13 +49,13 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<List<StudentDetailDto>>(_studentDal.GetStudentDetails());
         }
 
+        [ValidationAspect(typeof(StudentValidator))]
         public IResult AddStudent(Student student)
         {
             // İş kodları
-            if (student.StudentName.Length < 2)
-            {
-                return new ErrorResult(StudentMessages.StudentNameInvalid);
-            }
+            ValidationTool.Validate(new StudentValidator(), student);
+
+
             _studentDal.Add(student);
             return new SuccessResult(StudentMessages.StudentAdded);
         }
