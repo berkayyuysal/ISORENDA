@@ -1,7 +1,7 @@
 ﻿using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
 using BusinessLogicLayer.ValidationRules.FluentValidation;
-using Core.Aspects.Validation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
