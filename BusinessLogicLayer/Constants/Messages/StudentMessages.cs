@@ -12,5 +12,7 @@ namespace BusinessLogicLayer.Constants.Messages
         public static string StudentsListed = "Öğrenciler listelendi";
         public static string OneStudentListed = "Öğrenci listelendi";
         public static string StudentDetailListed = "Öğrenci detayları listelendi";
+        public static string StudentGenderInvalid = "Öğrenci cinsiyeti geçersizdir";
+        public static string StudentNameAlreadyExists = "Öğrenciler aynı isimde olamaz";
     }
 }

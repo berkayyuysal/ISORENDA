@@ -10,6 +10,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessLogicLayer.Concrete
@@ -54,10 +55,12 @@ namespace BusinessLogicLayer.Concrete
         {
             // İş kodları
             ValidationTool.Validate(new StudentValidator(), student);
-
-
-            _studentDal.Add(student);
-            return new SuccessResult(StudentMessages.StudentAdded);
+            if (CheckIfStudentGenderInvalid(student.StudentGender).IsSuccess && CheckIfStudentNameExists(student.StudentName).IsSuccess)
+            {
+                _studentDal.Add(student);
+                return new SuccessResult(StudentMessages.StudentAdded);
+            }
+            return new ErrorResult();
         }
 
         public IResult DeleteStudent(Student student)
@@ -71,6 +74,25 @@ namespace BusinessLogicLayer.Concrete
         {
             // İş kodları
             _studentDal.Update(student);
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfStudentGenderInvalid(int gender)
+        {
+            if (gender > 2)
+            {
+                return new ErrorResult(Constants.Messages.StudentMessages.StudentGenderInvalid);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfStudentNameExists(string name)
+        {
+            var result = _studentDal.GetAll(s => s.StudentName == name).Count;
+            if (result > 0)
+            {
+                return new ErrorResult(StudentMessages.StudentNameAlreadyExists);
+            }
             return new SuccessResult();
         }
     }
