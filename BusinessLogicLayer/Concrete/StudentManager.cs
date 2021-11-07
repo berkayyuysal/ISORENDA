@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Core.Utilities.Business;
 
 namespace BusinessLogicLayer.Concrete
 {
@@ -54,13 +55,13 @@ namespace BusinessLogicLayer.Concrete
         public IResult AddStudent(Student student)
         {
             // İş kodları
-            ValidationTool.Validate(new StudentValidator(), student);
-            if (CheckIfStudentGenderInvalid(student.StudentGender).IsSuccess && CheckIfStudentNameExists(student.StudentName).IsSuccess)
+            var result = BusinessRules.Run(CheckIfStudentGenderInvalid(student.StudentGender), CheckIfStudentNameExists(student.StudentName));
+            if (result != null)
             {
-                _studentDal.Add(student);
-                return new SuccessResult(StudentMessages.StudentAdded);
+                return result;
             }
-            return new ErrorResult();
+            _studentDal.Add(student);
+            return new SuccessResult(StudentMessages.StudentAdded);
         }
 
         public IResult DeleteStudent(Student student)
@@ -77,21 +78,21 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckIfStudentGenderInvalid(int gender)
-        {
-            if (gender > 2)
-            {
-                return new ErrorResult(Constants.Messages.StudentMessages.StudentGenderInvalid);
-            }
-            return new SuccessResult();
-        }
-
-        private IResult CheckIfStudentNameExists(string name)
+        public IResult CheckIfStudentNameExists(string name)
         {
             var result = _studentDal.GetAll(s => s.StudentName == name).Count;
             if (result > 0)
             {
                 return new ErrorResult(StudentMessages.StudentNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfStudentGenderInvalid(int gender)
+        {
+            if (gender > 2)
+            {
+                return new ErrorResult(Constants.Messages.StudentMessages.StudentGenderInvalid);
             }
             return new SuccessResult();
         }
