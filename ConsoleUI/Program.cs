@@ -1,8 +1,7 @@
-﻿using BusinessLogicLayer.Concrete;
-using DataAccessLayer.Concrete.EntityFramework;
-using DataAccessLayer.Concrete.InMemory;
+﻿using DataAccessLayer.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
+using BusinessLogicLayer.Concrete;
 
 namespace ConsoleUI
 {
@@ -10,7 +9,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CourseTest();
+            //CourseTest();
             //StudentTest();
             //TeacherTest();
         }
