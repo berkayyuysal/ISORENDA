@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
             var result = _studentService.GetAllStudents();
             if (result.IsSuccess)
@@ -34,9 +34,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetById")]
-        public IActionResult GetById(string id)
+        public IActionResult GetById(string studentId)
         {
-            var _id = new Guid(id);
+            var _id = new Guid(studentId);
             var result = _studentService.GetStudentById(_id);
             if (result.IsSuccess)
             {

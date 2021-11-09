@@ -20,7 +20,7 @@ namespace BusinessLogicLayer.ValidationRules.FluentValidation
             RuleFor(s => s.StudentSurname).MinimumLength(1);
 
             //Gender
-            RuleFor(s => s.StudentGender).NotEmpty();
+            RuleFor(s => s.StudentGender).NotNull();
 
         }
 
