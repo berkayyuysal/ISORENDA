@@ -6,6 +6,7 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete.EntityFramework;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.JWT;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -15,6 +16,12 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
         {
             builder.RegisterType<StudentManager>().As<IStudentService>().SingleInstance();
             builder.RegisterType<EfStudentDal>().As<IStudentDal>().SingleInstance();
+
+            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
