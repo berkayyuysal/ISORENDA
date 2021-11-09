@@ -12,6 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BusinessLogicLayer.BusinessAspects.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Business;
 
 namespace BusinessLogicLayer.Concrete
@@ -24,12 +30,14 @@ namespace BusinessLogicLayer.Concrete
             _studentDal = studentDal;
         }
 
+        [CacheAspect]
         public IDataResult<Student> GetStudentById(Guid id)
         {
             // İş kodları
             return new SuccessDataResult<Student>(_studentDal.GetOne(s => s.StudentId == id));
         }
 
+        [CacheAspect]
         public IDataResult<List<Student>> GetAllStudents()
         {
             if (DateTime.Now.Hour == 00)
@@ -51,10 +59,15 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<List<StudentDetailDto>>(_studentDal.GetStudentDetails());
         }
 
-        [ValidationAspect(typeof(StudentValidator))]
+        //[SecuredOperation("admin")] -> OK
+        [ValidationAspect(typeof(StudentValidator))] //-> OK
+        //[CacheAspect(5)] -> OK Parameter is optional. If you dont send any parameter the parameter value setted "60" by default.
+        [CacheRemoveAspect("IStudentService.Get")] // -> OK
+        //[TransactionScopeAspect] -> OK
+        //[PerformanceAspect(5)] -> OK
+        //[LogAspect(typeof(FileLogger))] -> OK
         public IResult AddStudent(Student student)
         {
-            // İş kodları
             var result = BusinessRules.Run(CheckIfStudentGenderInvalid(student.StudentGender), CheckIfStudentNameExists(student.StudentName));
             if (result != null)
             {
