@@ -9,5 +9,6 @@ namespace BusinessLogicLayer.Abstract
     public interface ICourseService
     {
         IResult AddCourse(Course course);
+        IDataResult<List<Course>> GetAllCourses();
     }
 }
