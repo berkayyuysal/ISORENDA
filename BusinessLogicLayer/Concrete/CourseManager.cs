@@ -21,5 +21,11 @@ namespace BusinessLogicLayer.Concrete
             _courseDal.Add(course);
             return new SuccessResult();
         }
+
+        public IDataResult<List<Course>> GetAllCourses()
+        {
+            var result = _courseDal.GetAll();
+            return new SuccessDataResult<List<Course>>(result);
+        }
     }
 }
