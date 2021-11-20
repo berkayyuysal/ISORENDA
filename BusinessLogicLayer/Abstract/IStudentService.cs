@@ -16,5 +16,6 @@ namespace BusinessLogicLayer.Abstract
         IResult AddStudent(Student student);
         IResult UpdateStudent(Student student);
         IResult DeleteStudent(Student student);
+        IDataResult<List<Student>> GetStudentByCourse(Guid id);
     }
 }

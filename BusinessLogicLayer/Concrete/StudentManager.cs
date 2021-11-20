@@ -84,6 +84,11 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult();
         }
 
+        public IDataResult<List<Student>> GetStudentByCourse(Guid id)
+        {
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(s => s.CourseId == id));
+        }
+
         public IResult UpdateStudent(Student student)
         {
             // İş kodları
