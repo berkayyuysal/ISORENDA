@@ -45,6 +45,18 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
+        [HttpGet("GetByCourse")]
+        public IActionResult GetByCourse(string courseId)
+        {
+            var _id = new Guid(courseId);
+            var result = _studentService.GetStudentByCourse(_id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
         [HttpPost("AddStudent")]
         public IActionResult AddStudent(Student student)
         {
