@@ -23,6 +23,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
+            builder.RegisterType<CourseManager>().As<ICourseService>().SingleInstance();
+            builder.RegisterType<EfCourseDal>().As<ICourseDal>().SingleInstance();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
