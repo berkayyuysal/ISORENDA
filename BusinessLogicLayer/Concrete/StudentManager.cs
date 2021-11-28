@@ -48,6 +48,7 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<List<Student>>(_studentDal.GetAll(), StudentMessages.StudentsListed);
         }
 
+        //hello
         public IDataResult<List<Student>> GetStudentsByNameAndGender(Student student)
         {
             return new SuccessDataResult<List<Student>>
