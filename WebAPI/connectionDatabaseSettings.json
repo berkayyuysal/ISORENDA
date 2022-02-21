@@ -1,0 +1,6 @@
+{
+    "ConnectionStrings": 
+    {
+        "DefaultConnection": "Server=isorenda.database.windows.net;Database=ISORENDA;Persist Security Info=True;User ID=isorendadmin;Password=25478963Bi.@;MultipleActiveResultSets=True;"
+    }
+}
