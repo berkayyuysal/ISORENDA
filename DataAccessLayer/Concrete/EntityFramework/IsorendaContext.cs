@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Core.Entities.Concrete;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Concrete.EntityFramework
 {
@@ -11,7 +12,9 @@ namespace DataAccessLayer.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-DLVHVIG;Database=ISORENDA;Trusted_Connection=true");
+            var configurationRoot = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("connectionDatabaseSettings.json").Build();
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-DLVHVIG;Database=ISORENDA;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(configurationRoot.GetConnectionString("DefaultConnection"));
         }
 
         public DbSet<Student> Students { get; set; }
