@@ -8,5 +8,6 @@ namespace DataAccessLayer.Abstract
 {
     public interface ICourseDal: IEntityRepository<Course>
     {
+        //şasldşasld
     }
 }
