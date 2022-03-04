@@ -1,8 +1,5 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
-using BusinessLogicLayer.Abstract;
-using BusinessLogicLayer.Concrete;
-using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete.EntityFramework;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
@@ -14,17 +11,14 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<StudentManager>().As<IStudentService>().SingleInstance();
-            builder.RegisterType<EfStudentDal>().As<IStudentDal>().SingleInstance();
+            // builder.RegisterType<StudentManager>().As<IStudentService>().SingleInstance();
+            // builder.RegisterType<EfStudentDal>().As<IStudentDal>().SingleInstance();
 
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            // builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            // builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
-            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
-            builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-
-            builder.RegisterType<CourseManager>().As<ICourseService>().SingleInstance();
-            builder.RegisterType<EfCourseDal>().As<ICourseDal>().SingleInstance();
+            // builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+            // builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

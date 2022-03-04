@@ -362,14 +362,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-#App Settings
+#appsettings
 appsettings.json
 
-#Database Connection Settings
+#connection
 connectionDatabaseSettings.json
 
-#Launch Json
-launch.json
 
-#Task Json
-tasks.json
+.vscode/
