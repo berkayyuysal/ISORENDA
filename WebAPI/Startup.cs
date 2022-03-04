@@ -1,6 +1,6 @@
-using BusinessLogicLayer.Abstract;
-using BusinessLogicLayer.Concrete;
-using DataAccessLayer.Abstract;
+// using BusinessLogicLayer.Abstract;
+// using BusinessLogicLayer.Concrete;
+// using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

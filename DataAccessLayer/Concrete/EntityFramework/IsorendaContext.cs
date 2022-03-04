@@ -1,9 +1,7 @@
-﻿using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Core.Entities.Concrete;
 using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Concrete.EntityFramework
@@ -18,13 +16,6 @@ namespace DataAccessLayer.Concrete.EntityFramework
             .Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
-
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<OperationClaim> OperationClaims { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
     }
 }
