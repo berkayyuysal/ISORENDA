@@ -4,6 +4,9 @@ using DataAccessLayer.Concrete.EntityFramework;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
+using BusinessLogicLayer.Concrete;
+using BusinessLogicLayer.Abstract;
+using DataAccessLayer.Abstract;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -11,11 +14,11 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // builder.RegisterType<StudentManager>().As<IStudentService>().SingleInstance();
-            // builder.RegisterType<EfStudentDal>().As<IStudentDal>().SingleInstance();
+            builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
+            builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
 
-            // builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            // builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
             // builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             // builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();

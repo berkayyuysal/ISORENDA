@@ -1,8 +1,9 @@
 using System;
+using Core.Entities;
 
 namespace Entities.Concrete
 {
-    public class ParentClient
+    public class ParentClient : IEntity
     {
         public Guid ParentClientId { get; set; }
         public Guid ParentId { get; set; }

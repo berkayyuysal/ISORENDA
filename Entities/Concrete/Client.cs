@@ -1,8 +1,9 @@
 using System;
+using Core.Entities;
 
 namespace Entities.Concrete
 {
-    public class Client
+    public class Client : IEntity
     {
         public Guid ClientId { get; set; }
         public Guid UserId { get; set; }
