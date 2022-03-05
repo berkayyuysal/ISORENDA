@@ -1,11 +1,18 @@
-using System;
-using Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Core.Entities.Concrete;
 
-namespace Entities.Concrete
+
+namespace Core.Entities.Concrete
 {
-    public class Client : IEntity
+    public class Parent : IEntity
     {
-        public Guid ClientId { get; set; }
+        public Parent()
+        {
+            ParentClients = new HashSet<ParentClient>();
+        }
+
+        public Guid ParentId { get; set; }
         public Guid UserId { get; set; }
         public string IdentityNumber { get; set; }
         public string FirstName { get; set; }
@@ -15,5 +22,8 @@ namespace Entities.Concrete
         public bool MaritalStatus { get; set; }
         public DateTime RealBirthDate { get; set; }
         public DateTime BirthDateOnIdentity { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual ICollection<ParentClient> ParentClients { get; set; }
     }
 }
