@@ -22,16 +22,16 @@ namespace WebAPI.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("add")]
-        public void Add(User user)
-        {
-            _userService.Register(user);
-        }
 
         [HttpGet("getUsers")]
-        public List<User> GetUsers()
+        public IActionResult GetUsers()
         {
-            return _userService.GetUsers();
+            var result = _userService.GetUsers();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
         }
     }
 }
