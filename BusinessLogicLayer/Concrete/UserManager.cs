@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.Constants.Messages;
 using Core.DataAccess.EntityFramework;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
+using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 
 namespace BusinessLogicLayer.Concrete
@@ -16,14 +19,37 @@ namespace BusinessLogicLayer.Concrete
             _userDal = userDal;
         }
 
-        public List<User> GetUsers()
-        {
-            return _userDal.GetAll();
-        }
-
-        public void Register(User user)
+        public IResult Add(User user)
         {
             _userDal.Add(user);
+            return new SuccessResult(UserMessages.UserAdded);
+        }
+        
+        //[SecuredOperation("admin")] -> OK
+        //[ValidationAspect(typeof(StudentValidator))] //-> OK
+        //[CacheAspect(5)] -> OK Parameter is optional. If you dont send any parameter the parameter value setted "60" by default.
+        //[CacheRemoveAspect("IStudentService.Get")] // -> OK
+        //[TransactionScopeAspect] -> OK
+        //[PerformanceAspect(5)] -> OK
+        //[LogAspect(typeof(FileLogger))] -> OK
+        public IDataResult<List<User>> GetUsers()
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), "Kullanıcılar Geldi.");
+        }
+        
+        public IDataResult<User> GetByMail(string email)
+        {
+             return new SuccessDataResult<User>(_userDal.GetOne(u => u.Email == email));
+        }
+
+        private IResult CheckIfUserMailExists(string mail)
+        {
+            var result = _userDal.GetAll(u => u.Email == mail).Count;
+            if (result > 0)
+            {
+                return new ErrorResult("Böyle bir mail kullanıldı.");
+            }
+            return new SuccessResult();
         }
     }
 }
