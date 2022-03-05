@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
 using Core.Extensions;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
