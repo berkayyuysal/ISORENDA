@@ -8,7 +8,7 @@ namespace Core.Entities.Concrete
         public Category()
         {
             CategoryCourses = new HashSet<CategoryCourse>();
-            //InverseCategoryParent = new HashSet<Category>();
+            InverseCategoryParent = new HashSet<Category>();
         }
 
         public Guid CategoryId { get; set; }
@@ -21,6 +21,6 @@ namespace Core.Entities.Concrete
 
         public virtual Category CategoryParent { get; set; }
         public virtual ICollection<CategoryCourse> CategoryCourses { get; set; }
-        //public virtual ICollection<Category> InverseCategoryParent { get; set; } Bir kategorinin bir tane üst kategorisi olabilir.
+        public virtual ICollection<Category> InverseCategoryParent { get; set; }
     }
 }

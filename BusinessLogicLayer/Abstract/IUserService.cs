@@ -13,6 +13,6 @@ namespace BusinessLogicLayer.Abstract
         public IResult Add(User user);
         IDataResult<User> GetByMail(string email);
         public IDataResult<List<User>> GetUsers();
-        //IDataResult<List<OperationClaim>> GetClaims(User user);
+        IDataResult<List<Role>> GetClaims(User user);
     }
 }
