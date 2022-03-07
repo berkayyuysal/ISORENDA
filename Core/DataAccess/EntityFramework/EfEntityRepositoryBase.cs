@@ -50,6 +50,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public TEntity GetById(Guid id)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().Find(id);
+            }
+        }
+
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())

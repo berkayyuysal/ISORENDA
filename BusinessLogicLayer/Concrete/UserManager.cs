@@ -37,14 +37,30 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), "Kullanıcılar Geldi.");
         }
         
+        public IDataResult<User> GetByUsername(string username)
+        {
+             return new SuccessDataResult<User>(_userDal.GetOne(u => u.Username == username));
+        }
+
         public IDataResult<User> GetByMail(string email)
         {
-             return new SuccessDataResult<User>(_userDal.GetOne(u => u.Email == email));
+            return new SuccessDataResult<User>(_userDal.GetOne(u => u.Email == email));
         }
 
         public IDataResult<List<Role>> GetClaims(User user)
         {
             return new SuccessDataResult<List<Role>>(_userDal.GetClaims(user));
         }
+
+        public IDataResult<User> GetUserById(Guid id)
+        {
+            var user = _userDal.GetById(id);
+            if (user == null)
+            {
+                return new ErrorDataResult<User>(UserMessages.UserNotFound);
+            }
+            return new SuccessDataResult<User>(_userDal.GetById(id));
+        }
+
     }
 }

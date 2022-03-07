@@ -20,4 +20,7 @@
     <Folder Include="DependencyResolvers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
+  </ItemGroup>
 </Project>

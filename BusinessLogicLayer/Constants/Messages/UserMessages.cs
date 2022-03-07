@@ -10,8 +10,9 @@ namespace BusinessLogicLayer.Constants.Messages
         public static string UserRegistered = "Kullanıcı kayıt oldu";
         public static string UserNotFound = "Kullanıcı bulunamadı";
         public static string PasswordError = "Kullanıcı şifresi hatalı";
-        public static string SuccessfulLogin = "Giriş başarılı";
-        public static string UserAlreadyExists = "Kullanıcı zaten kayıtlı";
+        public static string SuccessfulLogin = "Giriş başarılı.";
+        public static string UsernameAlreadyExists = "Kullanıcı adı kullanılmaktadır.";
+        public static string MailAlreadyExists = "Mail kullanılmaktadır.";
         public static string AccessTokenCreated = "Giriş anahtarı oluşturuldu";
         //AccessTokenCreated
     }
