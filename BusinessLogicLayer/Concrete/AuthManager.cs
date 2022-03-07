@@ -30,8 +30,9 @@ namespace BusinessLogicLayer.Concrete
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
-            if (userToCheck == null)
+            var userToCheck = userForLoginDto.Email != null ? _userService.GetByMail(userForLoginDto.Email) : _userService.GetByUsername(userForLoginDto.Username);
+
+            if (userToCheck.Data == null)
             {
                 return new ErrorDataResult<User>(UserMessages.UserNotFound);
             }
@@ -46,10 +47,10 @@ namespace BusinessLogicLayer.Concrete
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
         {
-            var result = BusinessRules.Run(UserExists(userForRegisterDto.Email));
+            var result = BusinessRules.Run(IsUserMailExists(userForRegisterDto.Email), IsUserUsernameExists(userForRegisterDto.Username));
             if (result != null)
             {
-                return new ErrorDataResult<User>(UserMessages.UserAlreadyExists);
+                return new ErrorDataResult<User>(result.Message);
             }
 
             byte[] passwordHash, passwordSalt;
@@ -70,11 +71,20 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<User>(user, UserMessages.UserRegistered);
         }
 
-        public IResult UserExists(string email)
+        public IResult IsUserMailExists(string email)
         {
             if (_userService.GetByMail(email).Data != null)
             {
-                return new ErrorResult(UserMessages.UserAlreadyExists);
+                return new ErrorResult(UserMessages.MailAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
+        public IResult IsUserUsernameExists(string username)
+        {
+            if (_userService.GetByUsername(username).Data != null)
+            {
+                return new ErrorResult(UserMessages.UsernameAlreadyExists);
             }
             return new SuccessResult();
         }

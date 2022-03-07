@@ -1,12 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
-using Core.Entities.Concrete;
-using Core.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -22,10 +15,21 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet("getUsers")]
+        [HttpGet("GetUsers")]
         public IActionResult GetUsers()
         {
             var result = _userService.GetUsers();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("GetUserById")]
+        public IActionResult GetUserById(Guid id)
+        {
+            var result = _userService.GetUserById(id);
             if (result.IsSuccess)
             {
                 return Ok(result);

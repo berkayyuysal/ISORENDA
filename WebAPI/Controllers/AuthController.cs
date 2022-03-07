@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
             _authService = authService;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
             var userToLogin = _authService.Login(userForLoginDto);
@@ -37,10 +37,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExists = _authService.UserExists(userForRegisterDto.Email);
+            var userExists = _authService.IsUserMailExists(userForRegisterDto.Email).IsSuccess == false
+                ? _authService.IsUserMailExists(userForRegisterDto.Email)
+                : _authService.IsUserUsernameExists(userForRegisterDto.Username);
+
             if (!userExists.IsSuccess)
             {
                 return BadRequest(userExists.Message);
