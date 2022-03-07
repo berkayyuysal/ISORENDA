@@ -1,16 +1,8 @@
-using DataAccessLayer.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -18,6 +10,8 @@ using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace WebAPI
 {
@@ -53,6 +47,11 @@ namespace WebAPI
                     };
                 });
 
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Isorenda", Version = "v1" });
+            });
+
             services.AddDependencyResolvers(new ICoreModule[]
             {
                 new CoreModule()
@@ -76,6 +75,12 @@ namespace WebAPI
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSwagger(); app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Isorenda V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
