@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
-using Core.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -22,10 +16,59 @@ namespace WebAPI.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet("getRoles")]
-        public List<Role> GetRoles()
+        [HttpGet("GetRoles")]
+        public IActionResult GetRoles()
         {
-            return _roleService.GetRoles();
+            var result = _roleService.GetRoles();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("AddRole")]
+        public IActionResult AddRole(Role role)
+        {
+            var result = _roleService.AddRole(role);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpDelete("DeleteRole")]
+        public IActionResult DeleteRole(Role role)
+        {
+            var result = _roleService.DeleteRole(role);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("UpdateRole")]
+        public IActionResult UpdateRole(Role role)
+        {
+            var result = _roleService.UpdateRole(role);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("GetRoleById")]
+        public IActionResult GetRoleById(Guid roleId)
+        {
+            var result = _roleService.GetRoleById(roleId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
         }
     }
 }
