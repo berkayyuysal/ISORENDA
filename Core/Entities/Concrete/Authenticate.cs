@@ -17,6 +17,7 @@ namespace Core.Entities.Concrete
         public DateTime InsertDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public Guid UpdateUserId { get; set; }
+        public bool Status { get; set; }
 
         public virtual ICollection<AuthenticateRole> AuthenticateRoles { get; set; }
     }

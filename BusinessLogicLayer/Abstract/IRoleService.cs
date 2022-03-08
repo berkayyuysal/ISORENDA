@@ -10,11 +10,11 @@ namespace BusinessLogicLayer.Abstract
 {
     public interface IRoleService 
     {
-        public IDataResult<List<Role>> GetRoles();
-        public IResult AddRole(Role role);
-        public IResult DeleteRole(Role role);
-        public IResult UpdateRole(Role role);
-        public IDataResult<List<Role>> GetRolesByUserId(Guid userId);
-        public IDataResult<Role> GetRoleById(Guid roleId);
+        IResult Add(Role role);
+        IResult Update(Role role);
+        IResult Delete(Role role);
+        IDataResult<List<Role>> GetRoles();
+        IDataResult<Role> GetRoleById(Guid roleId);
+        IDataResult<List<Role>> GetRolesByUserId(Guid userId);
     }
 }

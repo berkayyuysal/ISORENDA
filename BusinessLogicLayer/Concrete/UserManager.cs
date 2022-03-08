@@ -24,7 +24,20 @@ namespace BusinessLogicLayer.Concrete
             _userDal.Add(user);
             return new SuccessResult(UserMessages.UserAdded);
         }
-        
+
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(User user)
+        {
+            user.Status = false;
+            _userDal.Update(user);
+            return new SuccessResult();
+        }
+
         //[SecuredOperation("admin")] -> OK
         //[ValidationAspect(typeof(StudentValidator))] //-> OK
         //[CacheAspect(5)] -> OK Parameter is optional. If you dont send any parameter the parameter value setted "60" by default.
@@ -34,33 +47,52 @@ namespace BusinessLogicLayer.Concrete
         //[LogAspect(typeof(FileLogger))] -> OK
         public IDataResult<List<User>> GetUsers()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), "Kullanıcılar Geldi.");
+            var result = _userDal.GetAll();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<User>>(result);
+            }
+            return new ErrorDataResult<List<User>>();
         }
-        
+
+        public IDataResult<User> GetUserById(Guid userId)
+        {
+            var result = _userDal.GetById(userId);
+            if (result != null)
+            {
+                return new SuccessDataResult<User>(result);
+            }
+            return new ErrorDataResult<User>(UserMessages.UserNotFound);
+        }
+
         public IDataResult<User> GetByUsername(string username)
         {
-             return new SuccessDataResult<User>(_userDal.GetOne(u => u.Username == username));
+            var result = _userDal.GetOne(u => u.Username == username);
+            if (result != null)
+            {
+                return new SuccessDataResult<User>(result);
+            }
+            return new ErrorDataResult<User>();
         }
 
         public IDataResult<User> GetByMail(string email)
         {
-            return new SuccessDataResult<User>(_userDal.GetOne(u => u.Email == email));
+            var result = _userDal.GetOne(u => u.Email == email);
+            if (result != null)
+            {
+                return new SuccessDataResult<User>(result);
+            }
+            return new ErrorDataResult<User>();
         }
 
         public IDataResult<List<Role>> GetClaims(User user)
         {
-            return new SuccessDataResult<List<Role>>(_userDal.GetClaims(user));
-        }
-
-        public IDataResult<User> GetUserById(Guid id)
-        {
-            var user = _userDal.GetById(id);
-            if (user == null)
+            var result = _userDal.GetClaims(user);
+            if (result != null)
             {
-                return new ErrorDataResult<User>(UserMessages.UserNotFound);
+                return new SuccessDataResult<List<Role>>(result);
             }
-            return new SuccessDataResult<User>(_userDal.GetById(id));
+            return new ErrorDataResult<List<Role>>();
         }
-
     }
 }

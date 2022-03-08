@@ -17,38 +17,48 @@ namespace BusinessLogicLayer.Concrete
             _roleDal = roleDal;
         }
 
-        public IResult AddRole(Role role)
+        public IResult Add(Role role)
         {
             _roleDal.Add(role);
             return new SuccessResult();
         }
 
-        public IResult DeleteRole(Role role)
+        public IResult Update(Role role)
+        {
+            _roleDal.GetOne(r => r.RoleId == role.RoleId);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(Role role)
         {
             role.Status = false;
             _roleDal.Update(role);
             return new SuccessResult();
         }
 
-        public IDataResult<Role> GetRoleById(Guid roleId)
-        {
-            return new SuccessDataResult<Role>(_roleDal.GetById(roleId));
-        }
-
         public IDataResult<List<Role>> GetRoles()
         {
-            return new SuccessDataResult<List<Role>>(_roleDal.GetAll(), "Roller geldi.");
+            var result = _roleDal.GetAll();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<Role>>(result);
+            }
+            return new ErrorDataResult<List<Role>>();
+        }
+
+        public IDataResult<Role> GetRoleById(Guid roleId)
+        {
+            var result = _roleDal.GetById(roleId);
+            if (result != null)
+            {
+                return new SuccessDataResult<Role>(result);
+            }
+            return new ErrorDataResult<Role>();
         }
 
         public IDataResult<List<Role>> GetRolesByUserId(Guid userId)
         {
             throw new NotImplementedException();
-        }
-
-        public IResult UpdateRole(Role role)
-        {
-            _roleDal.GetOne(r => r.RoleId == role.RoleId);
-            return new SuccessResult();
         }
     }
 }
