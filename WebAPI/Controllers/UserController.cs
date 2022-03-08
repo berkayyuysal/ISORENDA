@@ -19,22 +19,22 @@ namespace WebAPI.Controllers
         public IActionResult GetUsers()
         {
             var result = _userService.GetUsers();
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetUserById")]
-        public IActionResult GetUserById(Guid id)
+        public IActionResult GetUserById(Guid userId)
         {
-            var result = _userService.GetUserById(id);
-            if (result.IsSuccess)
+            var result = _userService.GetUserById(userId);
+            if (!result.IsSuccess)
             {
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
     }
 }

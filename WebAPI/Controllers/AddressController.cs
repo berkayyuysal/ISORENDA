@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpPost("UpdateAddresses")]
@@ -37,8 +36,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpDelete("DeleteAddress")]
@@ -49,8 +47,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetAddresses")]
@@ -61,20 +58,18 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetAddressByUserId")]
-        public ActionResult GetAddressByUserId(Guid id)
+        public ActionResult GetAddressByUserId(Guid userId)
         {
-            var result = _addressService.GetAddressesByUserId(id);
+            var result = _addressService.GetAddressesByUserId(userId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
     }
 }

@@ -47,9 +47,9 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorDataResult<List<Address>>();
         }
 
-        public IDataResult<Address> GetAddressById(Guid id)
+        public IDataResult<Address> GetAddressById(Guid addressId)
         {
-            var result = _addressDal.GetById(id);
+            var result = _addressDal.GetById(addressId);
             if (result != null)
             {
                 return new SuccessDataResult<Address>(result);
@@ -58,9 +58,9 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorDataResult<Address>();
         }
 
-        public IDataResult<List<Address>> GetAddressesByUserId(Guid id)
+        public IDataResult<List<Address>> GetAddressesByUserId(Guid userId)
         {
-            var result = _addressDal.GetAll(a => a.UserId == id);
+            var result = _addressDal.GetAll(a => a.UserId == userId);
             if (result != null)
             {
                 return new SuccessDataResult<List<Address>>(result);

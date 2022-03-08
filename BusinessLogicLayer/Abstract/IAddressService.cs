@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Abstract
         IResult Update(Address address);
         IResult Delete(Address address);
         IDataResult<List<Address>> GetAddresses();
-        IDataResult<Address> GetAddressById(Guid id);
-        IDataResult<List<Address>> GetAddressesByUserId(Guid id);
+        IDataResult<Address> GetAddressById(Guid addressId);
+        IDataResult<List<Address>> GetAddressesByUserId(Guid userId);
     }
 }

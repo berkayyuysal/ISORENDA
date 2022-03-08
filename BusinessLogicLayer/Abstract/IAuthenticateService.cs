@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Abstract
         IResult Update(Authenticate authenticate);
         IResult Delete(Authenticate authenticate);
         IDataResult<List<Authenticate>> GetAuthenticates();
-        IDataResult<Authenticate> GetAuthenticateById(Guid id);
+        IDataResult<Authenticate> GetAuthenticateById(Guid authenticateId);
         IDataResult<Authenticate> GetAuthenticateByName(string name);
     }
 }
