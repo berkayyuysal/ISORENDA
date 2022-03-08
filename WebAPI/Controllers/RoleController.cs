@@ -20,66 +20,66 @@ namespace WebAPI.Controllers
         public IActionResult AddRole(Role role)
         {
             var result = _roleService.Add(role);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result.Message);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpPost("UpdateRole")]
         public IActionResult UpdateRole(Role role)
         {
             var result = _roleService.Update(role);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result.Message);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpDelete("DeleteRole")]
         public IActionResult DeleteRole(Role role)
         {
             var result = _roleService.Delete(role);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result.Message);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetRoles")]
         public IActionResult GetRoles()
         {
             var result = _roleService.GetRoles();
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetRoleById")]
         public IActionResult GetRoleById(Guid roleId)
         {
             var result = _roleService.GetRoleById(roleId);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetRolesByUserId")]
         public IActionResult GetRolesByUserId(Guid userId)
         {
             var result = _roleService.GetRolesByUserId(userId);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            return Ok(result);
         }
     }
 }

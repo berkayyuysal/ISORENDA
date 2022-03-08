@@ -45,9 +45,9 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorDataResult<List<Authenticate>>();
         }
 
-        public IDataResult<Authenticate> GetAuthenticateById(Guid id)
+        public IDataResult<Authenticate> GetAuthenticateById(Guid authenticateId)
         {
-            var result = _authenticateDal.GetById(id);
+            var result = _authenticateDal.GetById(authenticateId);
             if (result != null)
             {
                 return new SuccessDataResult<Authenticate>(result);

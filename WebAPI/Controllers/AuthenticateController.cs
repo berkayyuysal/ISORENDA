@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpPost("UpdateAuthenticate")]
@@ -37,8 +36,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpDelete("DeleteAuthenticate")]
@@ -49,8 +47,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetAllAuthenticates")]
@@ -61,20 +58,18 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetAuthenticateById")]
-        public IActionResult GetAuthenticateById(Guid id)
+        public IActionResult GetAuthenticateById(Guid autehnticateId)
         {
-            var result = _authenticateService.GetAuthenticateById(id);
+            var result = _authenticateService.GetAuthenticateById(autehnticateId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet("GetAuthenticateByName")]
@@ -85,8 +80,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-
-            return Ok(result.Message);
+            return Ok(result);
         }
 
 
