@@ -20,7 +20,19 @@ namespace WebAPI.Controllers
         [HttpPost("AddAddress")]
         public ActionResult AddAddress(Address address, User user)
         {
-            var result = _addressService.AddAddress(address, user);
+            var result = _addressService.Add(address, user);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result.Message);
+        }
+
+        [HttpPost("UpdateAddresses")]
+        public ActionResult UpdateAddress(Address address)
+        {
+            var result = _addressService.Update(address);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -32,19 +44,7 @@ namespace WebAPI.Controllers
         [HttpDelete("DeleteAddress")]
         public ActionResult DeleteAddress(Address address)
         {
-            var result = _addressService.DeleteAddress(address);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
-
-            return Ok(result.Message);
-        }
-
-        [HttpGet("GetAddressByUserId")]
-        public ActionResult GetAddressByUserId(Guid id)
-        {
-            var result = _addressService.GetAddressesByUserId(id);
+            var result = _addressService.Delete(address);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -65,10 +65,10 @@ namespace WebAPI.Controllers
             return Ok(result.Message);
         }
 
-        [HttpPost("UpdateAddresses")]
-        public ActionResult UpdateAddress(Address address)
+        [HttpGet("GetAddressByUserId")]
+        public ActionResult GetAddressByUserId(Guid id)
         {
-            var result = _addressService.UpdateAddress(address);
+            var result = _addressService.GetAddressesByUserId(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -76,7 +76,5 @@ namespace WebAPI.Controllers
 
             return Ok(result.Message);
         }
-
-
     }
 }

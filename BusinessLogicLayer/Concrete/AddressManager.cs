@@ -16,45 +16,68 @@ namespace BusinessLogicLayer.Concrete
             _addressDal = addressDal;
         }
 
-        public IResult AddAddress(Address address, User user)
+        public IResult Add(Address address, User user)
         {
             address.UserId = user.UserId;
             _addressDal.Add(address);
             return new SuccessResult("Adres eklendi");
         }
 
-        public IResult DeleteAddress(Address address)
+        public IResult Update(Address address)
+        {
+            BusinessRules.Run(AddressIsChanged(address));
+            return new SuccessResult("Adres güncellendi.");
+        }
+
+        public IResult Delete(Address address)
         {
             address.Status = false;
             _addressDal.Update(address);
             return new SuccessResult("Adres silindi");
         }
 
-        public IDataResult<List<Address>> GetAddressesByUserId(Guid id)
-        {
-            return new SuccessDataResult<List<Address>>(_addressDal.GetAll(a => a.UserId == id));
-        }
-
         public IDataResult<List<Address>> GetAddresses()
         {
-            return new SuccessDataResult<List<Address>>(_addressDal.GetAll());
+            var result = _addressDal.GetAll();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<Address>>(result);
+            }
+
+            return new ErrorDataResult<List<Address>>();
         }
 
-        public IResult UpdateAddress(Address address)
+        public IDataResult<Address> GetAddressById(Guid id)
         {
-            BusinessRules.Run(AddressIsChanged(address));
-            return new SuccessResult("Adres güncellendi.");
+            var result = _addressDal.GetById(id);
+            if (result != null)
+            {
+                return new SuccessDataResult<Address>(result);
+            }
+
+            return new ErrorDataResult<Address>();
+        }
+
+        public IDataResult<List<Address>> GetAddressesByUserId(Guid id)
+        {
+            var result = _addressDal.GetAll(a => a.UserId == id);
+            if (result != null)
+            {
+                return new SuccessDataResult<List<Address>>(result);
+            }
+
+            return new ErrorDataResult<List<Address>>();
         }
 
         private IResult AddressIsChanged(Address address)
         {
             var oldAddress = _addressDal.GetById(address.AddressId);
 
-            if (oldAddress.Detail == address.Detail)
+            if (oldAddress.Detail != address.Detail)
             {
-                return new ErrorResult();
+                return new SuccessResult();
             }
-            return new SuccessResult();
+            return new ErrorResult();
         }
     }
 }

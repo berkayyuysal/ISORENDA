@@ -10,11 +10,13 @@ namespace BusinessLogicLayer.Abstract
 {
     public interface IUserService 
     {
-        public IResult Add(User user);
-        IDataResult<User> GetByUsername(string username);
-        public IDataResult<List<User>> GetUsers();
-        IDataResult<List<Role>> GetClaims(User user);
+        IResult Add(User user);
+        IResult Update(User user);
+        IResult Delete(User user);
+        IDataResult<List<User>> GetUsers();
+        IDataResult<User> GetUserById(Guid userId);
         IDataResult<User> GetByMail(string email);
-        IDataResult<User> GetUserById(Guid id);
+        IDataResult<User> GetByUsername(string username);
+        IDataResult<List<Role>> GetClaims(User user);
     }
 }

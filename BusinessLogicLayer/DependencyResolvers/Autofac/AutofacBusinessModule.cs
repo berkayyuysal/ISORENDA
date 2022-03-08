@@ -17,6 +17,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
             builder.RegisterType<AddressManager>().As<IAddressService>().SingleInstance();
             builder.RegisterType<EfAddressDal>().As<IAddressDal>().SingleInstance();
 
+            builder.RegisterType<AuthenticateManager>().As<IAuthenticateService>().SingleInstance();
+            builder.RegisterType<EfAuthenticateDal>().As<IAuthenticateDal>().SingleInstance();
+
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
 
