@@ -19,7 +19,7 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<AuthenticateManager>().As<IAuthenticateService>().SingleInstance();
             builder.RegisterType<EfAuthenticateDal>().As<IAuthenticateDal>().SingleInstance();
-
+            
             builder.RegisterType<CommentManager>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EfCommentDal>().As<ICommentDal>().SingleInstance();
 
