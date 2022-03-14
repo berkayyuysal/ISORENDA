@@ -71,7 +71,7 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<User>(user, UserMessages.UserRegistered);
         }
 
-        public IResult IsUserMailExists(string email)
+        private IResult IsUserMailExists(string email)
         {
             if (_userService.GetByMail(email).Data != null)
             {
@@ -80,7 +80,7 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult();
         }
 
-        public IResult IsUserUsernameExists(string username)
+        private IResult IsUserUsernameExists(string username)
         {
             if (_userService.GetByUsername(username).Data != null)
             {
