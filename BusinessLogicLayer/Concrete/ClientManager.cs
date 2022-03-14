@@ -13,16 +13,22 @@ namespace BusinessLogicLayer.Concrete
     {
         IClientDal _clientDal;
         IUserService _userService;
+        IAuthService _authService;
 
-        public ClientManager(IClientDal clientDal, IUserService userService)
+        public ClientManager(IClientDal clientDal, IUserService userService, IAuthService authService)
         {
             _clientDal = clientDal;
             _userService = userService;
+            _authService = authService;
         }
 
-        //[TransactionScopeAspect]
-        public IResult Add(Client client)
+        [TransactionScopeAspect]
+        public IResult Add(Client client, UserForRegisterDto userForRegisterDto)
         {
+            var user = _authService.Register(userForRegisterDto).Data;
+            client.UserId = user.UserId;
+            client.User = user;
+
             _clientDal.Add(client);
             return new SuccessResult();
         }
@@ -42,6 +48,16 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult( takenClient.FirstName + " adlı " +"kullanıcı silindi");
         }
 
+        public IDataResult<List<Client>> GetClients()
+        {
+            var result = _clientDal.GetAll();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<Client>>(result);
+            }
+            return new ErrorDataResult<List<Client>>();
+        }
+
         public IDataResult<Client> GetClientById(Guid clientId)
         {
             var result = _clientDal.GetById(clientId);
@@ -54,12 +70,18 @@ namespace BusinessLogicLayer.Concrete
 
         public IDataResult<Client> GetClientByUserId(Guid userId)
         {
-            throw new NotImplementedException();
+            var user = _userService.GetUserById(userId).Data;
+            var result = _clientDal.GetOne(u => u.UserId == user.UserId);
+            if (result != null)
+            {
+                return new SuccessDataResult<Client>(result);
+            }
+            return new ErrorDataResult<Client>();
         }
 
-        public IDataResult<List<Client>> GetClients()
+        public IDataResult<List<Client>> GetClientsWithUserInformations()
         {
-            var result = _clientDal.GetAll();
+            var result = _clientDal.GetClientsWithUserInformation();
             if (result != null)
             {
                 return new SuccessDataResult<List<Client>>(result);

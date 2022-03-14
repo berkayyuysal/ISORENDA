@@ -23,6 +23,15 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
             builder.RegisterType<CommentManager>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EfCommentDal>().As<ICommentDal>().SingleInstance();
 
+            builder.RegisterType<LoginLogManager>().As<ILoginLogService>().SingleInstance();
+            builder.RegisterType<EfLoginLogDal>().As<ILoginLogDal>().SingleInstance();
+
+            builder.RegisterType<FileManager>().As<IFileService>().SingleInstance();
+            builder.RegisterType<EfFileDal>().As<IFileDal>().SingleInstance();
+
+            builder.RegisterType<LikeManager>().As<ILikeService>().SingleInstance();
+            builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance();
+
             builder.RegisterType<CourseManager>().As<ICourseService>().SingleInstance();
             builder.RegisterType<EfCourseDal>().As<ICourseDal>().SingleInstance();
 
