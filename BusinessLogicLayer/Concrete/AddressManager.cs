@@ -26,6 +26,7 @@ namespace BusinessLogicLayer.Concrete
         public IResult Update(Address address)
         {
             BusinessRules.Run(AddressIsChanged(address));
+
             return new SuccessResult("Adres güncellendi.");
         }
 
