@@ -23,6 +23,7 @@ namespace BusinessLogicLayer.Concrete
             _companyDal.Add(company);
             return new SuccessResult();
         }
+
         public IResult Update(Company company)
         {
             _companyDal.Update(company);
