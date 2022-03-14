@@ -9,18 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class AddressController : Controller
+    public class FileController : Controller
     {
-        IAddressService _addressService;
-        public AddressController(IAddressService addressService)
+        IFileService _fileService;
+        public FileController(IFileService fileService)
         {
-            _addressService = addressService;
+            _fileService = fileService;
         }
 
-        [HttpPost("AddAddress")]
-        public IActionResult AddAddress(Address address, User user)
+        [HttpPost("AddFile")]
+        public IActionResult AddFile(File file)
         {
-            var result = _addressService.Add(address, user);
+            var result = _fileService.Add(file);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -28,10 +28,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("UpdateAddress")]
-        public IActionResult UpdateAddress(Address address)
+        [HttpPost("UpdateFile")]
+        public IActionResult UpdateFile(File file)
         {
-            var result = _addressService.Update(address);
+            var result = _fileService.Update(file);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -39,10 +39,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("DeleteAddress")]
-        public IActionResult DeleteAddress(Address address)
+        [HttpDelete("DeleteFile")]
+        public IActionResult DeleteFile(File file)
         {
-            var result = _addressService.Delete(address);
+            var result = _fileService.Delete(file);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -50,10 +50,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAddresses")]
-        public IActionResult GetAddresses()
+        [HttpGet("GetFiles")]
+        public IActionResult GetFiles()
         {
-            var result = _addressService.GetAddresses();
+            var result = _fileService.GetFiles();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -61,10 +61,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAddressByUserId")]
-        public IActionResult GetAddressByUserId(Guid userId)
+        [HttpGet("GetFileById")]
+        public IActionResult GetFileById(Guid fileId)
         {
-            var result = _addressService.GetAddressesByUserId(userId);
+            var result = _fileService.GetFileById(fileId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

@@ -16,6 +16,7 @@ namespace Core.Entities.Concrete
         public Guid FileId { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
+        public bool Status { get; set; }
 
         public virtual ICollection<FileAuthenticate> FileAuthenticates { get; set; }
         public virtual ICollection<FileClient> FileClients { get; set; }
