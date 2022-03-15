@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
+using FluentValidation.Results;
 
 namespace BusinessLogicLayer.Concrete
 {
@@ -64,14 +68,14 @@ namespace BusinessLogicLayer.Concrete
                 Status = userForRegisterDto.Status,
                 InsertDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
-                UpdateUserId = userForRegisterDto.UpdateUserId
+                UpdateUserId = userForRegisterDto.UserId
             };
-            _userService.Add(user);
 
+            _userService.Add(user);
             return new SuccessDataResult<User>(user, UserMessages.UserRegistered);
         }
 
-        public IResult IsUserMailExists(string email)
+        private IResult IsUserMailExists(string email)
         {
             if (_userService.GetByMail(email).Data != null)
             {
@@ -80,7 +84,7 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult();
         }
 
-        public IResult IsUserUsernameExists(string username)
+        private IResult IsUserUsernameExists(string username)
         {
             if (_userService.GetByUsername(username).Data != null)
             {
