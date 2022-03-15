@@ -23,8 +23,12 @@ namespace WebAPI.Controllers
         [HttpPost("AddClient")]
         public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
         {
-            _clientService.Add(client, userForRegisterDto);
-            return Ok(client);
+            var result = _clientService.Add(client, userForRegisterDto);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateClient")]

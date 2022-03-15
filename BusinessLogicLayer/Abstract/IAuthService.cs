@@ -10,7 +10,5 @@ namespace BusinessLogicLayer.Abstract
         IDataResult<User> Register(UserForRegisterDto userForRegisterDto);
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IDataResult<AccessToken> CreateAccessToken(User user);
-        IResult IsUserMailExists(string email);
-        IResult IsUserUsernameExists(string username);
     }
 }

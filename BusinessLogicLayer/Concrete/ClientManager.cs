@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
@@ -25,9 +27,14 @@ namespace BusinessLogicLayer.Concrete
         [TransactionScopeAspect]
         public IResult Add(Client client, UserForRegisterDto userForRegisterDto)
         {
-            var user = _authService.Register(userForRegisterDto).Data;
-            client.UserId = user.UserId;
-            client.User = user;
+            var user = _authService.Register(userForRegisterDto);
+            if (!user.IsSuccess)
+            {
+                return new ErrorResult(user.Message);
+            }
+
+            client.UserId = user.Data.UserId;
+            client.User = user.Data;
 
             _clientDal.Add(client);
             return new SuccessResult();
