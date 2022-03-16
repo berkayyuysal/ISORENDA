@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
-using Core.DataAccess.EntityFramework;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 
-namespace BusinessLogicLayer.Concrete
+namespace BusinessLogicLayer.Concrete.UserProcesses
 {
-    public class UserManager : IUserService
+    public partial class UserManager : IUserService
     {
         IUserDal _userDal;
         public UserManager(IUserDal userDal)
@@ -25,26 +27,35 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult(UserMessages.UserAdded);
         }
 
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IUserService.Get")]
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
+            var businessRuleResults = BusinessRules.Run(CheckIsUserMailExists(user.Email), CheckIsUserUsernameExists(user.Username));
+            if (businessRuleResults != null)
+            {
+                new ErrorResult(businessRuleResults.Message);
+            }
+
             _userDal.Update(user);
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IUserService.Get")]
         public IResult Delete(User user)
         {
+            var businessRuleResults = BusinessRules.Run(CheckIsUserDeleted(user));
+            if (businessRuleResults != null)
+            {
+                return new ErrorResult(businessRuleResults.Message);
+            }
             user.Status = false;
             _userDal.Update(user);
             return new SuccessResult();
         }
 
-        //[SecuredOperation("admin")] -> OK
-        //[ValidationAspect(typeof(StudentValidator))] //-> OK
-        //[CacheAspect(5)] -> OK Parameter is optional. If you dont send any parameter the parameter value setted "60" by default.
-        //[CacheRemoveAspect("IStudentService.Get")] // -> OK
-        //[TransactionScopeAspect] -> OK
-        //[PerformanceAspect(5)] -> OK
-        //[LogAspect(typeof(FileLogger))] -> OK
         public IDataResult<List<User>> GetUsers()
         {
             var result = _userDal.GetAll();

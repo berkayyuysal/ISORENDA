@@ -17,4 +17,12 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Concrete\User\" />
+    <None Remove="Concrete\ClientProcesses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Concrete\UserProcesses\" />
+    <Folder Include="Concrete\ClientProcesses\" />
+  </ItemGroup>
 </Project>
