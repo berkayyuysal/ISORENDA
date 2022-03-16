@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
 using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
@@ -49,6 +50,8 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessDataResult<User>(userToCheck.Data, UserMessages.SuccessfulLogin);
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(RegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
         {
             var result = BusinessRules.Run(IsUserMailExists(userForRegisterDto.Email), IsUserUsernameExists(userForRegisterDto.Username));
