@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -16,21 +21,54 @@ namespace BusinessLogicLayer.Concrete
             _addressDal = addressDal;
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(AddressValidator))]
+        [CacheRemoveAspect("IAddressService.Get")]
+        [PerformanceAspect(20)]
         public IResult Add(Address address, User user)
         {
-            address.UserId = user.UserId;
-            _addressDal.Add(address);
-            return new SuccessResult("Adres eklendi");
+            var businessRuleResults = BusinessRules.Run(CheckIsUserAddressExists(address, user.UserId));
+            if (businessRuleResults != null && address.Status == false)
+            {
+                address.Status = true;
+                _addressDal.Update(address);
+                return new SuccessResult("Adres eklendi");
+            }
+
+            if (businessRuleResults == null)
+            {
+                address.UserId = user.UserId;
+                _addressDal.Add(address);
+                return new SuccessResult("Adres eklendi");
+            }
+
+            return new ErrorResult(businessRuleResults.Message);
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(AddressValidator))]
+        [CacheRemoveAspect("IAddressService.Get")]
+        [PerformanceAspect(20)]
         public IResult Update(Address address)
         {
-            BusinessRules.Run(AddressIsChanged(address));
+            var result = BusinessRules.Run(CheckIsAddressChanged(address));
+            if (result != null)
+            {
+                return new ErrorResult(result.Message);
+            }
+            _addressDal.Update(address);
             return new SuccessResult("Adres güncellendi.");
         }
 
         public IResult Delete(Address address)
         {
+            var result = BusinessRules.Run(CheckIsAddressDeleted(address));
+
+            if (!result.IsSuccess)
+            {
+                return new ErrorResult(result.Message);
+            }
+
             address.Status = false;
             _addressDal.Update(address);
             return new SuccessResult("Adres silindi");
@@ -69,7 +107,7 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorDataResult<List<Address>>();
         }
 
-        private IResult AddressIsChanged(Address address)
+        private IResult CheckIsAddressChanged(Address address)
         {
             var oldAddress = _addressDal.GetById(address.AddressId);
 
@@ -77,7 +115,27 @@ namespace BusinessLogicLayer.Concrete
             {
                 return new SuccessResult();
             }
-            return new ErrorResult();
+            return new ErrorResult("Hey Developer! Update butonunu inaktif olarak ayarlamayı unuttun.");
+        }
+
+        private IResult CheckIsAddressDeleted(Address address)
+        {
+            var addressResult = _addressDal.GetOne(a => a.AddressId == address.AddressId);
+            if (!addressResult.Status)
+            {
+                return new ErrorResult("Böyle bir adres bulunamamaktadır.");
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIsUserAddressExists(Address address, Guid userId)
+        {
+            var addressResult = _addressDal.GetOne(a => a.CityId == address.CityId && a.TownId == address.TownId && a.Detail == address.Detail && a.UserId == userId);
+            if (addressResult != null)
+            {
+                return new ErrorResult("Böyle bir adres bulunmaktadır.");
+            }
+            return new SuccessResult();
         }
     }
 }
