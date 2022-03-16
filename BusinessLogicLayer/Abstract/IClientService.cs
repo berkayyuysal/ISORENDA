@@ -15,5 +15,6 @@ namespace BusinessLogicLayer.Abstract
         IDataResult<Client> GetClientById(Guid clientId);
         IDataResult<Client> GetClientByUserId(Guid userId);
         IDataResult<List<Client>> GetClientsWithUserInformations();
+        IDataResult<Client> GetOneClientWithUserInformations(Guid clientId);
     }
 }
