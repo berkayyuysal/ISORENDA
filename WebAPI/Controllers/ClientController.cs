@@ -23,6 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("AddClient")]
+        [TransactionScopeAspect]
         public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
         {
             try
@@ -47,19 +48,41 @@ namespace WebAPI.Controllers
         [HttpPost("UpdateClient")]
         public IActionResult UpdateClient(Client client)
         {
-            _clientService.Update(client);
-            return Ok(client);
+            try
+            {
+                var result = _clientService.Update(client);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(client);
+            }
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete("DeleteClient")]
         public IActionResult DeleteClient(Client client)
         {
-            var result = _clientService.Delete(client);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _clientService.Delete(client);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpGet("GetClients")]
@@ -99,6 +122,17 @@ namespace WebAPI.Controllers
         public IActionResult GetClientsWithUserInformations()
         {
             var result = _clientService.GetClientsWithUserInformations();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetOneClientWithUserInformations")]
+        public IActionResult GetOneClientWithUserInformations(Guid clientId)
+        {
+            var result = _clientService.GetOneClientWithUserInformations(clientId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

@@ -14,7 +14,9 @@ namespace BusinessLogicLayer.Abstract
         IResult Update(User user);
         IResult Delete(User user);
         IDataResult<List<User>> GetUsers();
+        IDataResult<List<User>> GetActiveUsers();
         IDataResult<User> GetUserById(Guid userId);
+        IDataResult<User> GetActiveUserById(Guid userId);
         IDataResult<User> GetByMail(string email);
         IDataResult<User> GetByUsername(string username);
         IDataResult<List<Role>> GetClaims(User user);

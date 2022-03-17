@@ -39,5 +39,32 @@ namespace DataAccessLayer.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        public Client GetOneClientWithUserInformations(Guid clientId)
+        {
+            using (IsorendaContext context = new IsorendaContext())
+            {
+                var result = from client in context.Clients
+                             join user in context.Users
+                             on client.UserId equals user.UserId
+                             where client.ClientId.Equals(clientId)
+                             select new Client
+                             {
+                                 ClientId = client.ClientId,
+                                 UserId = client.UserId,
+                                 IdentityNumber = client.IdentityNumber,
+                                 FirstName = client.FirstName,
+                                 MiddleName = client.MiddleName,
+                                 LastName = client.LastName,
+                                 Gender = client.Gender,
+                                 MaritalStatus = client.MaritalStatus,
+                                 RealBirthDate = client.RealBirthDate,
+                                 BirthDateOnIdentity = client.BirthDateOnIdentity,
+                                 User = user
+                             };
+
+                return result.FirstOrDefault();
+            }
+        }
     }
 }
