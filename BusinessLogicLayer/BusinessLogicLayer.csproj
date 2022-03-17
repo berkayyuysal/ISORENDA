@@ -20,9 +20,13 @@
   <ItemGroup>
     <None Remove="Concrete\User\" />
     <None Remove="Concrete\ClientProcesses\" />
+    <None Remove="Concrete\CompanyProcesses\" />
+    <None Remove="Concrete\AuthProcesses\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Concrete\UserProcesses\" />
     <Folder Include="Concrete\ClientProcesses\" />
+    <Folder Include="Concrete\CompanyProcesses\" />
+    <Folder Include="Concrete\AuthProcesses\" />
   </ItemGroup>
 </Project>

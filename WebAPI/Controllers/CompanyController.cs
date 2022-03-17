@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -19,25 +21,47 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("AddCompany")]
-        public IActionResult AddCompany(Company company)
+        public IActionResult AddCompany(Company company, UserForRegisterDto userForRegisterDto)
         {
-            var result = _companyService.Add(company);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _companyService.Add(company, userForRegisterDto);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPost("UpdateCompany")]
         public IActionResult UpdateCompany(Company company)
         {
-            var result = _companyService.Update(company);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _companyService.Update(company);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete("DeleteCompany")]
@@ -62,10 +86,32 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetAllActiveCompanies")]
+        public IActionResult GetAllActiveCompanies()
+        {
+            var result = _companyService.GetActiveCompanies();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("GetCompanyById")]
         public IActionResult GetCompanyById(Guid companyId)
         {
             var result = _companyService.GetCompanyById(companyId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetActiveCompanyById")]
+        public IActionResult GetActiveCompanyById(Guid companyId)
+        {
+            var result = _companyService.GetActiveCompanyById(companyId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.Constants.Messages;
-using BusinessLogicLayer.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
@@ -21,13 +21,24 @@ namespace BusinessLogicLayer.Concrete.UserProcesses
             _userDal = userDal;
         }
 
+        [TransactionScopeAspect]
+        [PerformanceAspect(20)]
+        [CacheRemoveAspect("IUserService.Get")]
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
+            var result = BusinessRules.Run(CheckIsUserMailExists(user.Email), CheckIsUserUsernameExists(user.Username));
+            if (result != null)
+            {
+                return new ErrorDataResult<User>(result.Message);
+            }
+
             _userDal.Add(user);
             return new SuccessResult(UserMessages.UserAdded);
         }
 
         [TransactionScopeAspect]
+        [PerformanceAspect(20)]
         [CacheRemoveAspect("IUserService.Get")]
         [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
@@ -43,6 +54,7 @@ namespace BusinessLogicLayer.Concrete.UserProcesses
         }
 
         [TransactionScopeAspect]
+        [PerformanceAspect(20)]
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Delete(User user)
         {
@@ -66,9 +78,29 @@ namespace BusinessLogicLayer.Concrete.UserProcesses
             return new ErrorDataResult<List<User>>();
         }
 
+        public IDataResult<List<User>> GetActiveUsers()
+        {
+            var result = _userDal.GetAll(u => u.Status == true);
+            if (result != null)
+            {
+                return new SuccessDataResult<List<User>>(result);
+            }
+            return new ErrorDataResult<List<User>>();
+        }
+
         public IDataResult<User> GetUserById(Guid userId)
         {
             var result = _userDal.GetById(userId);
+            if (result != null)
+            {
+                return new SuccessDataResult<User>(result);
+            }
+            return new ErrorDataResult<User>(UserMessages.UserNotFound);
+        }
+
+        public IDataResult<User> GetActiveUserById(Guid userId)
+        {
+            var result = _userDal.GetOne(u => u.UserId == userId && u.Status == true);
             if (result != null)
             {
                 return new SuccessDataResult<User>(result);
