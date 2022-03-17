@@ -11,6 +11,8 @@ namespace BusinessLogicLayer.Abstract
         IResult Update(Course course);
         IResult Delete(Course course);
         IDataResult<List<Course>> GetCourses();
+        IDataResult<List<Course>> GetActiveCourses();
         IDataResult<Course> GetCourseById(Guid courseId);
+        IDataResult<Course> GetActiveCourseById(Guid courseId);
     }
 }
