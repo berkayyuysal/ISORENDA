@@ -23,6 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("AddClient")]
+        [TransactionScopeAspect]
         public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
         {
             try

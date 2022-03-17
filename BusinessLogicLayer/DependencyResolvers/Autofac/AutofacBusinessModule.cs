@@ -9,6 +9,8 @@ using BusinessLogicLayer.Abstract;
 using DataAccessLayer.Abstract;
 using BusinessLogicLayer.Concrete.UserProcesses;
 using BusinessLogicLayer.Concrete.ClientProcesses;
+using BusinessLogicLayer.Concrete.CompanyProcesses;
+using BusinessLogicLayer.Concrete.AuthProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
