@@ -4,7 +4,8 @@ using System.Text;
 
 namespace BusinessLogicLayer.Concrete.CategoryProcesses
 {
-    class CategoryBusinessRules
+    public partial class CategoryBusinessRules
     {
+
     }
 }
