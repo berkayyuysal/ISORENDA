@@ -21,10 +21,10 @@ namespace BusinessLogicLayer.Concrete
             _addressDal = addressDal;
         }
 
-        [TransactionScopeAspect]
-        [ValidationAspect(typeof(AddressValidator))]
-        [CacheRemoveAspect("IAddressService.Get")]
         [PerformanceAspect(20)]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IAddressService.Get")]
+        [ValidationAspect(typeof(AddressValidator))]
         public IResult Add(Address address, User user)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsUserAddressExists(address, user.UserId));
@@ -45,10 +45,10 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorResult(businessRuleResults.Message);
         }
 
-        [TransactionScopeAspect]
-        [ValidationAspect(typeof(AddressValidator))]
-        [CacheRemoveAspect("IAddressService.Get")]
         [PerformanceAspect(20)]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IAddressService.Get")]
+        [ValidationAspect(typeof(AddressValidator))]
         public IResult Update(Address address)
         {
             var result = BusinessRules.Run(CheckIsAddressChanged(address));
@@ -60,6 +60,9 @@ namespace BusinessLogicLayer.Concrete
             return new SuccessResult("Adres güncellendi.");
         }
 
+        [PerformanceAspect(20)]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IAddressService.Get")]
         public IResult Delete(Address address)
         {
             var result = BusinessRules.Run(CheckIsAddressDeleted(address));
