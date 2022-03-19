@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Updateparent")]
-        public IActionResult Updateparent(Parent parent)
+        public IActionResult UpdateParent(Parent parent)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("Deleteparent")]
-        public IActionResult Deleteparent(Parent parent)
+        public IActionResult DeleteParent(Parent parent)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("Getparents")]
-        public IActionResult Getparents()
+        public IActionResult GetParents()
         {
             var result = _parentService.GetParents();
             if (!result.IsSuccess)
@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetparentById")]
-        public IActionResult GetparentById(Guid parentId)
+        public IActionResult GetParentById(Guid parentId)
         {
             var result = _parentService.GetParentById(parentId);
             if (!result.IsSuccess)
@@ -104,7 +104,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetparentByUserId")]
-        public IActionResult GetparentByUserId(Guid userId)
+        public IActionResult GetParentByUserId(Guid userId)
         {
             var result = _parentService.GetParentByUserId(userId);
             if (!result.IsSuccess)
@@ -115,7 +115,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetparentsWithUserInformations")]
-        public IActionResult GetparentsWithUserInformations()
+        public IActionResult GetParentsWithUserInformations()
         {
             var result = _parentService.GetParentsWithUserInformations();
             if (!result.IsSuccess)
@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetOneparentWithUserInformations")]
-        public IActionResult GetOneparentWithUserInformations(Guid parentId)
+        public IActionResult GetOneParentWithUserInformations(Guid parentId)
         {
             var result = _parentService.GetOneParentWithUserInformations(parentId);
             if (!result.IsSuccess)
