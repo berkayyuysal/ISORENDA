@@ -14,9 +14,9 @@ using BusinessLogicLayer.Concrete.AuthProcesses;
 using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.LikeProcesses;
+using BusinessLogicLayer.Concrete.AddressProcesses;
+using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.CategoryProcesses;
-using BusinessLogicLayer.Concrete.ParentProcesses;
-using BusinessLogicLayer.Concrete.MentorProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -38,12 +38,6 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<FileManager>().As<IFileService>().SingleInstance();
             builder.RegisterType<EfFileDal>().As<IFileDal>().SingleInstance();
-
-            builder.RegisterType<ParentManager>().As<IParentService>().SingleInstance();
-            builder.RegisterType<EfParentDal>().As<IParentDal>().SingleInstance();
-
-            builder.RegisterType<MentorManager>().As<IMentorService>().SingleInstance();
-            builder.RegisterType<EfMentorDal>().As<IMentorDal>().SingleInstance();
 
             builder.RegisterType<LikeManager>().As<ILikeService>().SingleInstance();
             builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance();
