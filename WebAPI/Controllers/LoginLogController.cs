@@ -21,27 +21,41 @@ namespace WebAPI.Controllers
         [HttpPost("AddLoginLog")]
         public IActionResult AddLoginLog(LoginLog loginLog, Guid userId)
         {
-            var result = _loginLogService.Add(loginLog, userId);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _loginLogService.Add(loginLog, userId);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
-        [HttpPost("UpdateLoginLog")]
-        public IActionResult UpdateLoginLog(LoginLog loginLog)
+        [HttpPost("UpdateForLogOutLoginLog")]
+        public IActionResult UpdateForLogOutLoginLog(LoginLog loginLog)
         {
-            var result = _loginLogService.Update(loginLog);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _loginLogService.UpdateForLogOut(loginLog);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
-        [HttpGet("GetUpdates")]
-        public IActionResult GetUpdates()
+        [HttpGet("GetLoginLogs")]
+        public IActionResult GetLoginLogs()
         {
             var result = _loginLogService.GetLoginLogs();
             if (!result.IsSuccess)
@@ -62,5 +76,15 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetLoginLogsByUserId")]
+        public IActionResult GetLoginLogsByUserId(Guid userId)
+        {
+            var result = _loginLogService.GetLoginLogsByUserId(userId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
     }
 }
