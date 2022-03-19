@@ -20,40 +20,54 @@ namespace WebAPI.Controllers
         [HttpPost("AddLike")]
         public IActionResult AddLike(Like like)
         {
-            var result = _likeService.Add(like);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _likeService.Add(like);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
-        }
-
-        [HttpPost("UpdateLike")]
-        public IActionResult UpdateLike(Like like)
-        {
-            var result = _likeService.Update(like);
-            if (!result.IsSuccess)
+            catch (Exception exception)
             {
-                return BadRequest(result.Message);
+                return BadRequest(exception.Message);
             }
-            return Ok(result);
         }
 
         [HttpDelete("DeleteLike")]
         public IActionResult DeleteLike(Like like)
         {
-            var result = _likeService.Delete(like);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _likeService.Delete(like);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpGet("GetLikes")]
         public IActionResult GetLikes()
         {
             var result = _likeService.GetLikes();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetLikesByPostId")]
+        public IActionResult GetLikesByPostId(Guid postId)
+        {
+            var result = _likeService.GetLikesByPostId(postId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
