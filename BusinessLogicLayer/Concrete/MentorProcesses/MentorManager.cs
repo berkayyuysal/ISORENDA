@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Concrete.MentorProcesses
         }
 
         [TransactionScopeAspect]
-        [CacheRemoveAspect("IClientService.Get")]
+        [CacheRemoveAspect("IMentorService.Get")]
         [ValidationAspect(typeof(MentorValidator))]
         public IResult Update(Mentor mentor)
         {
@@ -71,7 +71,7 @@ namespace BusinessLogicLayer.Concrete.MentorProcesses
         }
 
         [TransactionScopeAspect]
-        [CacheRemoveAspect("IClientService.Get")]
+        [CacheRemoveAspect("IMentorService.Get")]
         public IResult Delete(Mentor mentor)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsMentorDeleted(mentor));
