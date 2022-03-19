@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
@@ -15,18 +18,24 @@ namespace BusinessLogicLayer.Concrete
             _discountDal = discountDal;
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(DiscountValidator))]
         public IResult Add(Discount discount)
         {
             _discountDal.Add(discount);
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(DiscountValidator))]
         public IResult Update(Discount discount)
         {
             _discountDal.Update(discount);
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(DiscountValidator))]
         public IResult Delete(Discount discount)
         {
             discount.Status = false;

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
+using BusinessLogicLayer.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
@@ -15,18 +18,24 @@ namespace BusinessLogicLayer.Concrete
             _commentDal = commentDal;
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(CommentValidator))]
         public IResult Add(Comment comment)
         {
             _commentDal.Add(comment);
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(CommentValidator))]
         public IResult Update(Comment comment)
         {
             _commentDal.Update(comment);
             return new SuccessResult();
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(CommentValidator))]
         public IResult Delete(Comment comment)
         {
             comment.Status = false;

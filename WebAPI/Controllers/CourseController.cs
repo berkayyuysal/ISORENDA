@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentValidation;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
@@ -20,34 +21,67 @@ namespace WebAPI.Controllers
         [HttpPost("AddCourse")]
         public IActionResult AddCourse(Course course)
         {
-            var result = _courseService.Add(course);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _courseService.Add(course);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpPost("UpdateCourse")]
         public IActionResult UpdateCourse(Course course)
         {
-            var result = _courseService.Update(course);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _courseService.Update(course);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete("DeleteCourse")]
         public IActionResult DeleteCourse(Course course)
         {
-            var result = _courseService.Delete(course);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _courseService.Delete(course);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpGet("GetCourses")]
@@ -72,5 +106,26 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetActiveCourses")]
+        public IActionResult GetActiveCourses()
+        {
+            var result = _courseService.GetActiveCourses();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetActiveCourseById")]
+        public IActionResult GetActiveCourseById(Guid courseId)
+        {
+            var result = _courseService.GetActiveCourseById(courseId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
     }
 }

@@ -13,9 +13,9 @@ using Core.Utilities.Security.JWT;
 using Entities.DTOs;
 using FluentValidation.Results;
 
-namespace BusinessLogicLayer.Concrete
+namespace BusinessLogicLayer.Concrete.AuthProcesses
 {
-    public class AuthManager : IAuthService
+    public partial class AuthManager : IAuthService
     {
         IUserService _userService;
         ITokenHelper _tokenHelper;
@@ -54,12 +54,6 @@ namespace BusinessLogicLayer.Concrete
         [ValidationAspect(typeof(RegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
         {
-            var result = BusinessRules.Run(IsUserMailExists(userForRegisterDto.Email), IsUserUsernameExists(userForRegisterDto.Username));
-            if (result != null)
-            {
-                return new ErrorDataResult<User>(result.Message);
-            }
-
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out passwordHash, out passwordSalt);
             var user = new User
@@ -76,24 +70,6 @@ namespace BusinessLogicLayer.Concrete
 
             _userService.Add(user);
             return new SuccessDataResult<User>(user, UserMessages.UserRegistered);
-        }
-
-        private IResult IsUserMailExists(string email)
-        {
-            if (_userService.GetByMail(email).Data != null)
-            {
-                return new ErrorResult(UserMessages.MailAlreadyExists);
-            }
-            return new SuccessResult();
-        }
-
-        private IResult IsUserUsernameExists(string username)
-        {
-            if (_userService.GetByUsername(username).Data != null)
-            {
-                return new ErrorResult(UserMessages.UsernameAlreadyExists);
-            }
-            return new SuccessResult();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
                 var result = from client in context.Clients
                              join user in context.Users
                              on client.UserId equals user.UserId
-                             where client.Equals(clientId)
+                             where client.ClientId.Equals(clientId)
                              select new Client
                              {
                                  ClientId = client.ClientId,

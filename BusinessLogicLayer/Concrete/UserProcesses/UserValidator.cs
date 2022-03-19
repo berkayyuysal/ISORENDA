@@ -2,7 +2,7 @@
 using Core.Entities.Concrete;
 using FluentValidation;
 
-namespace BusinessLogicLayer.ValidationRules.FluentValidation
+namespace BusinessLogicLayer.Concrete.UserProcesses
 {
     public class UserValidator : AbstractValidator<User>
     {
