@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
         }
 
         [PerformanceAspect(20)]
-        //[SecuredOperation("superadmin")]
+        [SecuredOperation("superadmin")]
         [TransactionScopeAspect]
         [CacheRemoveAspect("IAuthenticateService.Get")]
         [ValidationAspect(typeof(AuthenticateValidator))]
