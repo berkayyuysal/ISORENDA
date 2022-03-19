@@ -8,6 +8,6 @@ namespace DataAccessLayer.Abstract
     public interface IMentorDal : IEntityRepository<Mentor>
     {
         List<Mentor> GetMentorsWithUserInformation();
-        Mentor GetOneMentorWithUserInformations(Guid clientId);
+        Mentor GetOneMentorWithUserInformations(Guid mentorId);
     }
 }

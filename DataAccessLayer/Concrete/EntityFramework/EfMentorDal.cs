@@ -46,7 +46,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
                 var result = from mentor in context.Mentors
                              join user in context.Users
                              on mentor.UserId equals user.UserId
-                             where mentor.MentorId.Equals(mentor)
+                             where mentor.MentorId.Equals(mentorId)
                              select new Mentor
                              {
                                  MentorId = mentor.MentorId,

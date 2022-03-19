@@ -11,10 +11,10 @@ namespace BusinessLogicLayer.Abstract
         IResult Add(Mentor mentor, UserForRegisterDto userForRegisterDto);
         IResult Update(Mentor mentor);
         IResult Delete(Mentor mentor);
-        IDataResult<List<Mentor>> GetClients();
-        IDataResult<Mentor> GetClientById(Guid mentorId);
-        IDataResult<Mentor> GetClientByUserId(Guid userId);
-        IDataResult<List<Mentor>> GetClientsWithUserInformations();
-        IDataResult<Mentor> GetOneClientWithUserInformations(Guid mentorId);
+        IDataResult<List<Mentor>> GetMentors();
+        IDataResult<Mentor> GetMentorById(Guid mentorId);
+        IDataResult<Mentor> GetMentorByUserId(Guid userId);
+        IDataResult<List<Mentor>> GetMentorsWithUserInformations();
+        IDataResult<Mentor> GetOneMentorWithUserInformations(Guid mentorId);
     }
 }
