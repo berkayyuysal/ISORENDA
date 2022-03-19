@@ -11,9 +11,9 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 
-namespace BusinessLogicLayer.Concrete
+namespace BusinessLogicLayer.Concrete.AddressProcesses
 {
-    public class AddressManager : IAddressService
+    public partial class AddressManager : IAddressService
     {
         IAddressDal _addressDal;
         public AddressManager(IAddressDal addressDal)
@@ -51,10 +51,10 @@ namespace BusinessLogicLayer.Concrete
         [ValidationAspect(typeof(AddressValidator))]
         public IResult Update(Address address)
         {
-            var result = BusinessRules.Run(CheckIsAddressChanged(address));
-            if (result != null)
+            var businessRuleResults = BusinessRules.Run(CheckIsAddressChanged(address));
+            if (businessRuleResults != null)
             {
-                return new ErrorResult(result.Message);
+                return new ErrorResult(businessRuleResults.Message);
             }
             _addressDal.Update(address);
             return new SuccessResult("Adres güncellendi.");
@@ -65,11 +65,11 @@ namespace BusinessLogicLayer.Concrete
         [CacheRemoveAspect("IAddressService.Get")]
         public IResult Delete(Address address)
         {
-            var result = BusinessRules.Run(CheckIsAddressDeleted(address));
+            var businessRuleResults = BusinessRules.Run(CheckIsAddressDeleted(address));
 
-            if (!result.IsSuccess)
+            if (!businessRuleResults.IsSuccess)
             {
-                return new ErrorResult(result.Message);
+                return new ErrorResult(businessRuleResults.Message);
             }
 
             address.Status = false;
@@ -110,35 +110,6 @@ namespace BusinessLogicLayer.Concrete
             return new ErrorDataResult<List<Address>>();
         }
 
-        private IResult CheckIsAddressChanged(Address address)
-        {
-            var oldAddress = _addressDal.GetById(address.AddressId);
-
-            if (oldAddress.Detail != address.Detail)
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult("Hey Developer! Update butonunu inaktif olarak ayarlamayı unuttun.");
-        }
-
-        private IResult CheckIsAddressDeleted(Address address)
-        {
-            var addressResult = _addressDal.GetOne(a => a.AddressId == address.AddressId);
-            if (!addressResult.Status)
-            {
-                return new ErrorResult("Böyle bir adres bulunamamaktadır.");
-            }
-            return new SuccessResult();
-        }
-
-        private IResult CheckIsUserAddressExists(Address address, Guid userId)
-        {
-            var addressResult = _addressDal.GetOne(a => a.CityId == address.CityId && a.TownId == address.TownId && a.Detail == address.Detail && a.UserId == userId);
-            if (addressResult != null)
-            {
-                return new ErrorResult("Böyle bir adres bulunmaktadır.");
-            }
-            return new SuccessResult();
-        }
+        
     }
 }

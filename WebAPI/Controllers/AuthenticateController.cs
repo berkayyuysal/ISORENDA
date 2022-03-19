@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -20,12 +21,25 @@ namespace WebAPI.Controllers
         [HttpPost("AddAuthenticate")]
         public IActionResult AddAuthenticate(Authenticate authenticate)
         {
-            var result = _authenticateService.Add(authenticate);
-            if (!result.IsSuccess)
+
+            try
             {
-                return BadRequest(result.Message);
+                var result = _authenticateService.Add(authenticate);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
         [HttpPost("UpdateAuthenticate")]
