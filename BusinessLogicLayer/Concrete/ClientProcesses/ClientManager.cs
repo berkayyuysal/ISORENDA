@@ -140,7 +140,7 @@ namespace BusinessLogicLayer.Concrete.ClientProcesses
 
         public IDataResult<Client> GetOneClientWithUserInformations(Guid clientId)
         {
-             var result = _clientDal.GetOneClientWithUserInformations(clientId);
+            var result = _clientDal.GetOneClientWithUserInformations(clientId);
             if (result != null)
             {
                 return new SuccessDataResult<Client>(result);
