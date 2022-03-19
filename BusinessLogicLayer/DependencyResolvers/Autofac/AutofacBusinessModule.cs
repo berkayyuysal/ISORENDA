@@ -11,6 +11,8 @@ using BusinessLogicLayer.Concrete.UserProcesses;
 using BusinessLogicLayer.Concrete.ClientProcesses;
 using BusinessLogicLayer.Concrete.CompanyProcesses;
 using BusinessLogicLayer.Concrete.AuthProcesses;
+using BusinessLogicLayer.Concrete.AddressProcesses;
+using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {

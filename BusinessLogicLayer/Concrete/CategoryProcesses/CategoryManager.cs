@@ -5,9 +5,9 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccessLayer.Abstract;
 
-namespace BusinessLogicLayer.Concrete
+namespace BusinessLogicLayer.Concrete.CategoryProcesses
 {
-    public class CategoryManager : ICategoryService
+    public partial class CategoryManager : ICategoryService
     {
         ICategoryDal _categoryDal;
         public CategoryManager(ICategoryDal categoryDal)
