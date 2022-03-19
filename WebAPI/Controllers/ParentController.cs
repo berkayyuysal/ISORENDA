@@ -3,32 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
-using Core.Aspects.Autofac.Transaction;
 using Core.Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientController : Controller
+    public class ParentController : Controller
     {
-        IClientService _clientService;
-        public ClientController(IClientService clientService)
+        IParentService _parentService;
+        public ParentController(IParentService parentService)
         {
-            _clientService = clientService;
+            _parentService = parentService;
         }
 
-        [HttpPost("AddClient")]
-        [TransactionScopeAspect]
-        public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
+        [HttpPost("AddParent")]
+        public IActionResult AddParent(Parent parent, UserForRegisterDto userForRegisterDto)
         {
             try
             {
-                var result = _clientService.Add(client, userForRegisterDto);
+                var result = _parentService.Add(parent, userForRegisterDto);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result.Message);
@@ -45,12 +41,12 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("UpdateClient")]
-        public IActionResult UpdateClient(Client client)
+        [HttpPost("Updateparent")]
+        public IActionResult UpdateParent(Parent parent)
         {
             try
             {
-                var result = _clientService.Update(client);
+                var result = _parentService.Update(parent);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result);
@@ -67,12 +63,12 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteClient")]
-        public IActionResult DeleteClient(Client client)
+        [HttpDelete("Deleteparent")]
+        public IActionResult DeleteParent(Parent parent)
         {
             try
             {
-                var result = _clientService.Delete(client);
+                var result = _parentService.Delete(parent);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result);
@@ -85,10 +81,10 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("GetClients")]
-        public IActionResult GetClients()
+        [HttpGet("Getparents")]
+        public IActionResult GetParents()
         {
-            var result = _clientService.GetClients();
+            var result = _parentService.GetParents();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -96,10 +92,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientById")]
-        public IActionResult GetClientById(Guid clientId)
+        [HttpGet("GetparentById")]
+        public IActionResult GetParentById(Guid parentId)
         {
-            var result = _clientService.GetClientById(clientId);
+            var result = _parentService.GetParentById(parentId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -107,10 +103,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientByUserId")]
-        public IActionResult GetClientByUserId(Guid userId)
+        [HttpGet("GetparentByUserId")]
+        public IActionResult GetParentByUserId(Guid userId)
         {
-            var result = _clientService.GetClientByUserId(userId);
+            var result = _parentService.GetParentByUserId(userId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -118,10 +114,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientsWithUserInformations")]
-        public IActionResult GetClientsWithUserInformations()
+        [HttpGet("GetparentsWithUserInformations")]
+        public IActionResult GetParentsWithUserInformations()
         {
-            var result = _clientService.GetClientsWithUserInformations();
+            var result = _parentService.GetParentsWithUserInformations();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -129,10 +125,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetOneClientWithUserInformations")]
-        public IActionResult GetOneClientWithUserInformations(Guid clientId)
+        [HttpGet("GetOneparentWithUserInformations")]
+        public IActionResult GetOneParentWithUserInformations(Guid parentId)
         {
-            var result = _clientService.GetOneClientWithUserInformations(clientId);
+            var result = _parentService.GetOneParentWithUserInformations(parentId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

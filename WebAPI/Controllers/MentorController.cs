@@ -3,32 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
-using Core.Aspects.Autofac.Transaction;
 using Core.Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class ClientController : Controller
+    public class MentorController : Controller
     {
-        IClientService _clientService;
-        public ClientController(IClientService clientService)
+        IMentorService _mentorService;
+        public MentorController(IMentorService mentorService)
         {
-            _clientService = clientService;
+            _mentorService = mentorService;
         }
 
-        [HttpPost("AddClient")]
-        [TransactionScopeAspect]
-        public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
+        [HttpPost("AddMentor")]
+        public IActionResult AddMentor(Mentor mentor, UserForRegisterDto userForRegisterDto)
         {
             try
             {
-                var result = _clientService.Add(client, userForRegisterDto);
+                var result = _mentorService.Add(mentor, userForRegisterDto);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result.Message);
@@ -45,12 +41,12 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("UpdateClient")]
-        public IActionResult UpdateClient(Client client)
+        [HttpPost("UpdateMentor")]
+        public IActionResult UpdateMentor(Mentor mentor)
         {
             try
             {
-                var result = _clientService.Update(client);
+                var result = _mentorService.Update(mentor);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result);
@@ -67,12 +63,12 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteClient")]
-        public IActionResult DeleteClient(Client client)
+        [HttpDelete("DeleteMentor")]
+        public IActionResult DeleteMentor(Mentor mentor)
         {
             try
             {
-                var result = _clientService.Delete(client);
+                var result = _mentorService.Delete(mentor);
                 if (!result.IsSuccess)
                 {
                     return BadRequest(result);
@@ -85,10 +81,10 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("GetClients")]
-        public IActionResult GetClients()
+        [HttpGet("GetMentors")]
+        public IActionResult GetMentors()
         {
-            var result = _clientService.GetClients();
+            var result = _mentorService.GetMentors();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -96,10 +92,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientById")]
-        public IActionResult GetClientById(Guid clientId)
+        [HttpGet("GetMentorById")]
+        public IActionResult GetMentorById(Guid mentorId)
         {
-            var result = _clientService.GetClientById(clientId);
+            var result = _mentorService.GetMentorById(mentorId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -107,10 +103,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientByUserId")]
-        public IActionResult GetClientByUserId(Guid userId)
+        [HttpGet("GetMentorByUserId")]
+        public IActionResult GetMentorByUserId(Guid userId)
         {
-            var result = _clientService.GetClientByUserId(userId);
+            var result = _mentorService.GetMentorByUserId(userId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -118,10 +114,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetClientsWithUserInformations")]
-        public IActionResult GetClientsWithUserInformations()
+        [HttpGet("GetMentorsWithUserInformations")]
+        public IActionResult GetMentorsWithUserInformations()
         {
-            var result = _clientService.GetClientsWithUserInformations();
+            var result = _mentorService.GetMentorsWithUserInformations();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -129,10 +125,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetOneClientWithUserInformations")]
-        public IActionResult GetOneClientWithUserInformations(Guid clientId)
+        [HttpGet("GetOneMentorWithUserInformations")]
+        public IActionResult GetOneMentorWithUserInformations(Guid mentorId)
         {
-            var result = _clientService.GetOneClientWithUserInformations(clientId);
+            var result = _mentorService.GetOneMentorWithUserInformations(mentorId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
