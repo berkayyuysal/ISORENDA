@@ -13,7 +13,9 @@ using BusinessLogicLayer.Concrete.CompanyProcesses;
 using BusinessLogicLayer.Concrete.AuthProcesses;
 using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
-
+using BusinessLogicLayer.Concrete.LikeProcesses;
+using BusinessLogicLayer.Concrete.AddressProcesses;
+using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
     public class AutofacBusinessModule : Module

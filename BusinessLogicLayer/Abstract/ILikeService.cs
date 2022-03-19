@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Abstract
     public interface ILikeService
     {
         IResult Add(Like like);
-        IResult Update(Like like);
         IResult Delete(Like like);
         IDataResult<List<Like>> GetLikes();
+        IDataResult<List<Like>> GetLikesByPostId(Guid postId);
         IDataResult<Like> GetLikeById(Guid likeId);
     }
 }
