@@ -17,6 +17,7 @@ using BusinessLogicLayer.Concrete.LikeProcesses;
 using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.CategoryProcesses;
+using BusinessLogicLayer.Concrete.PostProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -59,6 +60,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<ClientManager>().As<IClientService>().SingleInstance();
             builder.RegisterType<EfClientDal>().As<IClientDal>().SingleInstance();
+
+            builder.RegisterType<PostManager>().As<IPostService>().SingleInstance();
+            builder.RegisterType<EfPostDal>().As<IPostDal>().SingleInstance();
 
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();

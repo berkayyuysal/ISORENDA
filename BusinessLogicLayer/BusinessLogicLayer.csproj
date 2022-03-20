@@ -25,6 +25,7 @@
     <None Remove="Concrete\LikeProcesses\" />
     <None Remove="Concrete\MentorProcesses\" />
     <None Remove="Concrete\ParentProcesses\" />
+    <None Remove="Concrete\PostProcesses\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Concrete\UserProcesses\" />
@@ -34,5 +35,6 @@
     <Folder Include="Concrete\LikeProcesses\" />
     <Folder Include="Concrete\MentorProcesses\" />
     <Folder Include="Concrete\ParentProcesses\" />
+    <Folder Include="Concrete\PostProcesses\" />
   </ItemGroup>
 </Project>
