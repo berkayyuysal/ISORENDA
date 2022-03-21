@@ -72,7 +72,5 @@ namespace BusinessLogicLayer.Concrete.LikeProcesses
             }
             return new ErrorDataResult<Like>();
         }
-
-        
     }
 }

@@ -39,14 +39,14 @@ namespace BusinessLogicLayer.Concrete.ClientProcesses
                 return new ErrorResult(businessRuleResults.Message);
             }
 
-            var user = _authService.Register(userForRegisterDto);
-            if (!user.IsSuccess)
+            var userResult = _authService.Register(userForRegisterDto);
+            if (!userResult.IsSuccess)
             {
-                return new ErrorResult(user.Message);
+                return new ErrorResult(userResult.Message);
             }
 
-            client.UserId = user.Data.UserId;
-            client.User = user.Data;
+            client.UserId = userResult.Data.UserId;
+            client.User = userResult.Data;
 
             _clientDal.Add(client);
             return new SuccessResult();
