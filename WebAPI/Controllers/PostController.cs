@@ -113,8 +113,8 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetPostByMentorId")]
-        public IActionResult GetPostByMentorId(Guid mentorId)
+        [HttpGet("GetPostsByMentorId")]
+        public IActionResult GetPostsByMentorId(Guid mentorId)
         {
             var result = _postService.GetPostsByMentorId(mentorId);
             if (!result.IsSuccess)
