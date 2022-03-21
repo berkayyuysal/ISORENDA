@@ -21,13 +21,12 @@ namespace WebAPI.Controllers
         [HttpPost("AddAuthenticate")]
         public IActionResult AddAuthenticate(Authenticate authenticate)
         {
-
             try
             {
                 var result = _authenticateService.Add(authenticate);
                 if (!result.IsSuccess)
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest(result);
                 }
                 return Ok(result);
             }
@@ -37,31 +36,48 @@ namespace WebAPI.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest(exception);
             }
-            
         }
 
         [HttpPost("UpdateAuthenticate")]
         public IActionResult UpdateAuthenticate(Authenticate authenticate)
         {
-            var result = _authenticateService.Update(authenticate);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _authenticateService.Update(authenticate);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpDelete("DeleteAuthenticate")]
         public IActionResult DeleteAuthenticate(Authenticate authenticate)
         {
-            var result = _authenticateService.Delete(authenticate);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _authenticateService.Delete(authenticate);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpGet("GetAllAuthenticates")]
@@ -70,7 +86,7 @@ namespace WebAPI.Controllers
             var result = _authenticateService.GetAuthenticates();
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
             return Ok(result);
         }
@@ -81,22 +97,9 @@ namespace WebAPI.Controllers
             var result = _authenticateService.GetAuthenticateById(autehnticateId);
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
             return Ok(result);
         }
-
-        [HttpGet("GetAuthenticateByName")]
-        public IActionResult GetAuthenticateByName(string name)
-        {
-            var result = _authenticateService.GetAuthenticateByName(name);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok(result);
-        }
-
-
     }
 }

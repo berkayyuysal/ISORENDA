@@ -66,8 +66,7 @@ namespace BusinessLogicLayer.Concrete.AddressProcesses
         public IResult Delete(Address address)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsAddressDeleted(address));
-
-            if (!businessRuleResults.IsSuccess)
+            if (businessRuleResults != null)
             {
                 return new ErrorResult(businessRuleResults.Message);
             }
@@ -85,7 +84,7 @@ namespace BusinessLogicLayer.Concrete.AddressProcesses
                 return new SuccessDataResult<List<Address>>(result);
             }
 
-            return new ErrorDataResult<List<Address>>();
+            return new ErrorDataResult<List<Address>>(result);
         }
 
         public IDataResult<Address> GetAddressById(Guid addressId)
@@ -96,7 +95,7 @@ namespace BusinessLogicLayer.Concrete.AddressProcesses
                 return new SuccessDataResult<Address>(result);
             }
 
-            return new ErrorDataResult<Address>();
+            return new ErrorDataResult<Address>(result);
         }
 
         public IDataResult<List<Address>> GetAddressesByUserId(Guid userId)
@@ -107,9 +106,7 @@ namespace BusinessLogicLayer.Concrete.AddressProcesses
                 return new SuccessDataResult<List<Address>>(result);
             }
 
-            return new ErrorDataResult<List<Address>>();
+            return new ErrorDataResult<List<Address>>(result);
         }
-
-        
     }
 }

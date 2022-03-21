@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusinessLogicLayer.ValidationRules.FluentValidation
+namespace BusinessLogicLayer.Concrete.AddressProcesses
 {
     public class AddressValidator : AbstractValidator<Address>
     {

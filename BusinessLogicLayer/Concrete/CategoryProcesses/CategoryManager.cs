@@ -23,7 +23,7 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
 
         [PerformanceAspect(20)]
         [TransactionScopeAspect]
-        [CacheRemoveAspect("IAuthenticateService.Get")]
+        [CacheRemoveAspect("ICategoryService.Get")]
         [ValidationAspect(typeof(CategoryValidator))]
         public IResult Add(Category category)
         {
@@ -32,13 +32,13 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
             {
                 category.Status = true;
                 _categoryDal.Update(category);
-                return new SuccessResult("Kategori eklendi");
+                return new SuccessResult(category.Name + " eklendi");
             }
 
             if (businessRuleResults == null)
             {
                 _categoryDal.Add(category);
-                return new SuccessResult("Kategori Eklendi");
+                return new SuccessResult(category.Name + " eklendi");
             }
 
             return new ErrorResult(businessRuleResults.Message);
@@ -46,8 +46,8 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
 
         [PerformanceAspect(20)]
         [TransactionScopeAspect]
-        [CacheRemoveAspect("IAuthenticateService.Get")]
-        [ValidationAspect(typeof(AuthenticateValidator))]
+        [CacheRemoveAspect("ICategoryService.Get")]
+        [ValidationAspect(typeof(CategoryValidator))]
         public IResult Update(Category category)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsCategoryChanged(category));
@@ -56,12 +56,12 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
                 return new ErrorResult(businessRuleResults.Message);
             }
             _categoryDal.Update(category);
-            return new SuccessResult("Kategori güncellendi.");
+            return new SuccessResult(category.Name + " güncellendi.");
         }
 
         [PerformanceAspect(20)]
         [TransactionScopeAspect]
-        [CacheRemoveAspect("IAuthenticateService.Get")]
+        [CacheRemoveAspect("ICategoryService.Get")]
         public IResult Delete(Category category)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsCategoryDeleted(category));
@@ -71,7 +71,7 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
             }
             category.Status = false;
             _categoryDal.Update(category);
-            return new SuccessResult("Kategori silindi.");
+            return new SuccessResult(category.Name + " silindi.");
         }
 
         public IDataResult<List<Category>> GetCategories()
@@ -81,7 +81,7 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
             {
                 return new SuccessDataResult<List<Category>>(result);
             }
-            return new ErrorDataResult<List<Category>>();
+            return new ErrorDataResult<List<Category>>(result);
         }
 
         public IDataResult<Category> GetCategoryById(Guid categoryId)
@@ -91,17 +91,17 @@ namespace BusinessLogicLayer.Concrete.CategoryProcesses
             {
                 return new SuccessDataResult<Category>(result);
             }
-            return new ErrorDataResult<Category>();
+            return new ErrorDataResult<Category>(result);
         }
 
-        public IDataResult<Category> GetCategoryByParentId(Guid categoryParentId)
+        public IDataResult<List<Category>> GetCategoriesByParentId(Guid categoryParentId)
         {
-            var result = _categoryDal.GetOne(c => c.CategoryParentId == categoryParentId);
+            var result = _categoryDal.GetAll(c => c.CategoryParentId == categoryParentId);
             if (result != null)
             {
-                return new SuccessDataResult<Category>(result);
+                return new SuccessDataResult<List<Category>>(result);
             }
-            return new ErrorDataResult<Category>();
+            return new ErrorDataResult<List<Category>>(result);
         }
     }
 }

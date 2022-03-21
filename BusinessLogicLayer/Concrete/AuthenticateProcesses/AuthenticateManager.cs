@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BusinessLogicLayer.Abstract;
 using BusinessLogicLayer.BusinessAspects.Autofac;
-using BusinessLogicLayer.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
@@ -35,12 +34,12 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
             {
                 authenticate.Status = true;
                 _authenticateDal.Update(authenticate);
-                return new SuccessResult("Authenticate Eklendi");
+                return new SuccessResult(authenticate.Name + " yetkisi Eklendi");
             }
             if (businessRuleResult == null)
             {
                 _authenticateDal.Add(authenticate);
-                return new SuccessResult("Authenticate Eklendi");
+                return new SuccessResult(authenticate.Name + " yetkisi Eklendi");
             }
 
             return new ErrorResult(businessRuleResult.Message);
@@ -58,7 +57,7 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
                 return new ErrorResult(businessRuleResults.Message);
             }
             _authenticateDal.Update(authenticate);
-            return new SuccessResult("Authenticate güncellendi.");
+            return new SuccessResult(authenticate.Name + " yetkisi güncellendi.");
         }
 
         [PerformanceAspect(20)]
@@ -67,13 +66,13 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
         public IResult Delete(Authenticate authenticate)
         {
             var businessRuleResults = BusinessRules.Run(CheckIsAuthenticateDeleted(authenticate));
-            if (!businessRuleResults.IsSuccess)
+            if (businessRuleResults != null)
             {
                 return new ErrorResult(businessRuleResults.Message);
             }
             authenticate.Status = false;
             _authenticateDal.Update(authenticate);
-            return new SuccessResult("Authenticate silindi.");
+            return new SuccessResult(authenticate.Name + " yetkisi silindi.");
         }
 
         public IDataResult<List<Authenticate>> GetAuthenticates()
@@ -83,7 +82,7 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
             {
                 return new SuccessDataResult<List<Authenticate>>(result);
             }
-            return new ErrorDataResult<List<Authenticate>>();
+            return new ErrorDataResult<List<Authenticate>>(result);
         }
 
         public IDataResult<Authenticate> GetAuthenticateById(Guid authenticateId)
@@ -93,19 +92,7 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
             {
                 return new SuccessDataResult<Authenticate>(result);
             }
-            return new ErrorDataResult<Authenticate>();
+            return new ErrorDataResult<Authenticate>(result);
         }
-
-        public IDataResult<Authenticate> GetAuthenticateByName(string name)
-        {
-            var result = _authenticateDal.GetOne(a => a.Name == name);
-            if (result != null)
-            {
-                return new SuccessDataResult<Authenticate>(result);
-            }
-            return new ErrorDataResult<Authenticate>();
-        }
-
     }
-
 }
