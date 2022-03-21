@@ -18,6 +18,8 @@ using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.CategoryProcesses;
 using BusinessLogicLayer.Concrete.PostProcesses;
+using BusinessLogicLayer.Concrete.LoginLogProcesses;
+using BusinessLogicLayer.Concrete.CityProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {

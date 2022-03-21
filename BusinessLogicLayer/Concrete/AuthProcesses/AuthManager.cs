@@ -33,6 +33,8 @@ namespace BusinessLogicLayer.Concrete.AuthProcesses
             return new SuccessDataResult<AccessToken>(accessToken, UserMessages.AccessTokenCreated);
         }
 
+        [TransactionScopeAspect]
+        [ValidationAspect(typeof(LoginValidator))]
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = userForLoginDto.Email != null ? _userService.GetByMail(userForLoginDto.Email) : _userService.GetByUsername(userForLoginDto.Username);
