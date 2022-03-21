@@ -12,6 +12,6 @@ namespace BusinessLogicLayer.Abstract
         IResult Delete(Category category);
         IDataResult<List<Category>> GetCategories();
         IDataResult<Category> GetCategoryById(Guid categoryId);
-        IDataResult<Category> GetCategoryByParentId(Guid categoryParentId);
+        IDataResult<List<Category>> GetCategoriesByParentId(Guid categoryParentId);
     }
 }

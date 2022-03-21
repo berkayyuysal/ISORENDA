@@ -19,7 +19,6 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
         private IResult CheckIsAuthenticateChanged(Authenticate authenticate)
         {
             var oldAuthenticate = _authenticateDal.GetById(authenticate.AuthenticateId);
-
             if (oldAuthenticate.Description != authenticate.Description || oldAuthenticate.Name != authenticate.Name)
             {
                 return new SuccessResult();

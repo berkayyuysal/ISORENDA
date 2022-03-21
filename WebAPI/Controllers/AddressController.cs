@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -20,34 +21,63 @@ namespace WebAPI.Controllers
         [HttpPost("AddAddress")]
         public IActionResult AddAddress(Address address, User user)
         {
-            var result = _addressService.Add(address, user);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _addressService.Add(address, user);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpPost("UpdateAddress")]
         public IActionResult UpdateAddress(Address address)
         {
-            var result = _addressService.Update(address);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _addressService.Update(address);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpDelete("DeleteAddress")]
         public IActionResult DeleteAddress(Address address)
         {
-            var result = _addressService.Delete(address);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _addressService.Delete(address);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpGet("GetAddresses")]
@@ -56,7 +86,7 @@ namespace WebAPI.Controllers
             var result = _addressService.GetAddresses();
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
             return Ok(result);
         }
@@ -67,7 +97,18 @@ namespace WebAPI.Controllers
             var result = _addressService.GetAddressesByUserId(userId);
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("GetAddressById")]
+        public IActionResult GetAddressById(Guid addressId)
+        {
+            var result = _addressService.GetAddressById(addressId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
             }
             return Ok(result);
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Abstract;
 using Core.Entities.Concrete;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -20,34 +21,63 @@ namespace WebAPI.Controllers
         [HttpPost("AddCategory")]
         public IActionResult AddCategory(Category category)
         {
-            var result = _categoryService.Add(category);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _categoryService.Add(category);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpPost("UpdateCategory")]
         public IActionResult UpdateCategory(Category category)
         {
-            var result = _categoryService.Update(category);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _categoryService.Update(category);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpDelete("DeleteCategory")]
         public IActionResult DeleteCategory(Category category)
         {
-            var result = _categoryService.Delete(category);
-            if (!result.IsSuccess)
+            try
             {
-                return BadRequest(result.Message);
+                var result = _categoryService.Delete(category);
+                if (!result.IsSuccess)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpGet("GetCategories")]
@@ -72,10 +102,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetCategoryByParentId")]
-        public IActionResult GetCategoryByParentId(Guid categoryParentId)
+        [HttpGet("GetCategoriesByParentId")]
+        public IActionResult GetCategoriesByParentId(Guid categoryParentId)
         {
-            var result = _categoryService.GetCategoryByParentId(categoryParentId);
+            var result = _categoryService.GetCategoriesByParentId(categoryParentId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
