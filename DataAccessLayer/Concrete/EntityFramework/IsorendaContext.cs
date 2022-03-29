@@ -789,7 +789,6 @@ namespace DataAccessLayer.Concrete.EntityFramework
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
 
-                entity.Property(e => e.UpdateUserId).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Town>(entity =>
