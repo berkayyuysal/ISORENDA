@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception exception)
             {
-                return BadRequest(exception);
+                return BadRequest(exception.Message);
             }
         }
 
