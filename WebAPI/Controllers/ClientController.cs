@@ -26,63 +26,34 @@ namespace WebAPI.Controllers
         [TransactionScopeAspect]
         public IActionResult AddClient(Client client, UserForRegisterDto userForRegisterDto)
         {
-            try
+            var result = _clientService.Add(client, userForRegisterDto);
+            if (!result.IsSuccess)
             {
-                var result = _clientService.Add(client, userForRegisterDto);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateClient")]
         public IActionResult UpdateClient(Client client)
         {
-            try
+            var result = _clientService.Update(client);
+            if (!result.IsSuccess)
             {
-                var result = _clientService.Update(client);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteClient")]
         public IActionResult DeleteClient(Client client)
         {
-            try
+            var result = _clientService.Delete(client);
+            if (!result.IsSuccess)
             {
-                var result = _clientService.Delete(client);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetClients")]

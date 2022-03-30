@@ -20,37 +20,23 @@ namespace WebAPI.Controllers
         [HttpPost("AddLike")]
         public IActionResult AddLike(Like like)
         {
-            try
+            var result = _likeService.Add(like);
+            if (!result.IsSuccess)
             {
-                var result = _likeService.Add(like);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteLike")]
         public IActionResult DeleteLike(Like like)
         {
-            try
+            var result = _likeService.Delete(like);
+            if (!result.IsSuccess)
             {
-                var result = _likeService.Delete(like);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetLikes")]

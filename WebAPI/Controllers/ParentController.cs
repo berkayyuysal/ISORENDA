@@ -22,63 +22,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddParent")]
         public IActionResult AddParent(Parent parent, UserForRegisterDto userForRegisterDto)
         {
-            try
+            var result = _parentService.Add(parent, userForRegisterDto);
+            if (!result.IsSuccess)
             {
-                var result = _parentService.Add(parent, userForRegisterDto);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("Updateparent")]
         public IActionResult UpdateParent(Parent parent)
         {
-            try
+            var result = _parentService.Update(parent);
+            if (!result.IsSuccess)
             {
-                var result = _parentService.Update(parent);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("Deleteparent")]
         public IActionResult DeleteParent(Parent parent)
         {
-            try
+            var result = _parentService.Delete(parent);
+            if (!result.IsSuccess)
             {
-                var result = _parentService.Delete(parent);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("Getparents")]

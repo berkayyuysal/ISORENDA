@@ -21,67 +21,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddFile")]
         public IActionResult AddFile(File file)
         {
-            try
+            var result = _fileService.Add(file);
+            if (!result.IsSuccess)
             {
-                var result = _fileService.Add(file);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateFile")]
         public IActionResult UpdateFile(File file)
         {
-            try
+            var result = _fileService.Update(file);
+            if (!result.IsSuccess)
             {
-                var result = _fileService.Update(file);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteFile")]
         public IActionResult DeleteFile(File file)
         {
-            try
+            var result = _fileService.Delete(file);
+            if (!result.IsSuccess)
             {
-                var result = _fileService.Delete(file);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetFiles")]

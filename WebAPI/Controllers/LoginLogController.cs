@@ -21,37 +21,23 @@ namespace WebAPI.Controllers
         [HttpPost("AddLoginLog")]
         public IActionResult AddLoginLog(LoginLog loginLog, Guid userId)
         {
-            try
+            var result = _loginLogService.Add(loginLog, userId);
+            if (!result.IsSuccess)
             {
-                var result = _loginLogService.Add(loginLog, userId);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateForLogOutLoginLog")]
         public IActionResult UpdateForLogOutLoginLog(LoginLog loginLog)
         {
-            try
+            var result = _loginLogService.UpdateForLogOut(loginLog);
+            if (!result.IsSuccess)
             {
-                var result = _loginLogService.UpdateForLogOut(loginLog);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetLoginLogs")]

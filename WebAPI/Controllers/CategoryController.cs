@@ -21,63 +21,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddCategory")]
         public IActionResult AddCategory(Category category)
         {
-            try
+            var result = _categoryService.Add(category);
+            if (!result.IsSuccess)
             {
-                var result = _categoryService.Add(category);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateCategory")]
         public IActionResult UpdateCategory(Category category)
         {
-            try
+            var result = _categoryService.Update(category);
+            if (!result.IsSuccess)
             {
-                var result = _categoryService.Update(category);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteCategory")]
         public IActionResult DeleteCategory(Category category)
         {
-            try
+            var result = _categoryService.Delete(category);
+            if (!result.IsSuccess)
             {
-                var result = _categoryService.Delete(category);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetCategories")]

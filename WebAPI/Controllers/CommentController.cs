@@ -23,68 +23,36 @@ namespace WebAPI.Controllers
         [HttpPost("AddComment")]
         public IActionResult AddComment(Comment comment)
         {
-            try
+            var result = _commentService.Add(comment);
+            if (!result.IsSuccess)
             {
-                var result = _commentService.Add(comment);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            
+            return Ok(result);
+
         }
 
         [HttpPost("UpdateComment")]
         public IActionResult UpdateComment(Comment comment)
         {
-            try
+            var result = _commentService.Update(comment);
+            if (!result.IsSuccess)
             {
-                var result = _commentService.Update(comment);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
+
         }
 
         [HttpDelete("DeleteComment")]
         public IActionResult DeleteComment(Comment comment)
         {
-            try
+            var result = _commentService.Delete(comment);
+            if (!result.IsSuccess)
             {
-                var result = _commentService.Delete(comment);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("GetComments")]

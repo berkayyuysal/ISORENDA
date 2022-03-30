@@ -23,67 +23,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddDiscount")]
         public IActionResult AddDiscount(Discount discount)
         {
-            try
+            var result = _discountService.Add(discount);
+            if (!result.IsSuccess)
             {
-                var result = _discountService.Add(discount);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }            
+            return Ok(result);
         }
 
         [HttpPost("UpdateDiscount")]
         public IActionResult UpdateDiscount(Discount discount)
         {
-            try
+            var result = _discountService.Update(discount);
+            if (!result.IsSuccess)
             {
-                var result = _discountService.Update(discount);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteDiscount")]
         public IActionResult DeleteDiscount(Discount discount)
         {
-            try
+            var result = _discountService.Delete(discount);
+            if (!result.IsSuccess)
             {
-                var result = _discountService.Delete(discount);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetDiscounts")]
