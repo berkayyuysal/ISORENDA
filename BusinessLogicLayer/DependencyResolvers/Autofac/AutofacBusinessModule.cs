@@ -15,6 +15,7 @@ using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.LikeProcesses;
 using BusinessLogicLayer.Concrete.AddressProcesses;
+using BusinessLogicLayer.Concrete.TownProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.CategoryProcesses;
 using BusinessLogicLayer.Concrete.PostProcesses;
@@ -56,6 +57,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
+            
+            builder.RegisterType<TownManager>().As<ITownService>().SingleInstance();
+            builder.RegisterType<EfTownDal>().As<ITownDal>().SingleInstance();
 
             builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
