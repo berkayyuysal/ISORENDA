@@ -23,60 +23,38 @@ namespace WebAPI.Controllers
         [HttpPost("Login")]
         public IActionResult Login(UserForLoginDto userForLoginDto)
         {
-            try
+            var userToLogin = _authService.Login(userForLoginDto);
+            if (!userToLogin.IsSuccess)
             {
-                var userToLogin = _authService.Login(userForLoginDto);
-                if (!userToLogin.IsSuccess)
-                {
-                    return BadRequest(userToLogin.Message);
-                }
+                return BadRequest(userToLogin.Message);
+            }
 
-                var result = _authService.CreateAccessToken(userToLogin.Data);
-                if (result.IsSuccess)
-                {
-                    return Ok(result.Data);
-                }
+            var result = _authService.CreateAccessToken(userToLogin.Data);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
 
-                return BadRequest(result.Message);
-            }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return BadRequest(result.Message);
         }
 
         [HttpPost("Register")]
         public IActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            try
-            {
-                var registerResult = _authService.Register(userForRegisterDto);
+            var registerResult = _authService.Register(userForRegisterDto);
 
-                if (!registerResult.IsSuccess)
-                {
-                    return BadRequest(registerResult.Message);
-                }
-
-                var result = _authService.CreateAccessToken(registerResult.Data);
-                if (result.IsSuccess)
-                {
-                    return Ok(result);
-                }
-
-                return BadRequest(result.Message);
-            }
-            catch (ValidationException validationException)
+            if (!registerResult.IsSuccess)
             {
-                return BadRequest(validationException);
+                return BadRequest(registerResult.Message);
             }
-            catch (Exception exception)
+
+            var result = _authService.CreateAccessToken(registerResult.Data);
+            if (result.IsSuccess)
             {
-                return BadRequest(exception);
+                return Ok(result);
             }
+
+            return BadRequest(result.Message);
         }
     }
 }

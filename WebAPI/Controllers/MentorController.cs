@@ -22,63 +22,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddMentor")]
         public IActionResult AddMentor(Mentor mentor, UserForRegisterDto userForRegisterDto)
         {
-            try
+            var result = _mentorService.Add(mentor, userForRegisterDto);
+            if (!result.IsSuccess)
             {
-                var result = _mentorService.Add(mentor, userForRegisterDto);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateMentor")]
         public IActionResult UpdateMentor(Mentor mentor)
         {
-            try
+            var result = _mentorService.Update(mentor);
+            if (!result.IsSuccess)
             {
-                var result = _mentorService.Update(mentor);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteMentor")]
         public IActionResult DeleteMentor(Mentor mentor)
         {
-            try
+            var result = _mentorService.Delete(mentor);
+            if (!result.IsSuccess)
             {
-                var result = _mentorService.Delete(mentor);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetMentors")]

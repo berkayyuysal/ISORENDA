@@ -21,63 +21,34 @@ namespace WebAPI.Controllers
         [HttpGet("AddPost")]
         public IActionResult AddPost(Post post, Guid mentorId)
         {
-            try
+            var result = _postService.Add(post, mentorId);
+            if (!result.IsSuccess)
             {
-                var result = _postService.Add(post, mentorId);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("UpdatePost")]
         public IActionResult UpdatePost(Post post)
         {
-            try
+            var result = _postService.Update(post);
+            if (!result.IsSuccess)
             {
-                var result = _postService.Update(post);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeletePost")]
         public IActionResult DeletePost(Post post)
         {
-            try
+            var result = _postService.Delete(post);
+            if (!result.IsSuccess)
             {
-                var result = _postService.Delete(post);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetPosts")]

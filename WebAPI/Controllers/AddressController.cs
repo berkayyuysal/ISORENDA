@@ -21,63 +21,35 @@ namespace WebAPI.Controllers
         [HttpPost("AddAddress")]
         public IActionResult AddAddress(Address address, User user)
         {
-            try
+            var result = _addressService.Add(address, user);
+            if (!result.IsSuccess)
             {
-                var result = _addressService.Add(address, user);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateAddress")]
         public IActionResult UpdateAddress(Address address)
         {
-            try
+            var result = _addressService.Update(address);
+            if (!result.IsSuccess)
             {
-                var result = _addressService.Update(address);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
+
         }
 
         [HttpDelete("DeleteAddress")]
         public IActionResult DeleteAddress(Address address)
         {
-            try
+            var result = _addressService.Delete(address);
+            if (!result.IsSuccess)
             {
-                var result = _addressService.Delete(address);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetAddresses")]

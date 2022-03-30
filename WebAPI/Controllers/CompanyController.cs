@@ -23,45 +23,23 @@ namespace WebAPI.Controllers
         [HttpPost("AddCompany")]
         public IActionResult AddCompany(Company company, UserForRegisterDto userForRegisterDto)
         {
-            try
+            var result = _companyService.Add(company, userForRegisterDto);
+            if (!result.IsSuccess)
             {
-                var result = _companyService.Add(company, userForRegisterDto);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateCompany")]
         public IActionResult UpdateCompany(Company company)
         {
-            try
+            var result = _companyService.Update(company);
+            if (!result.IsSuccess)
             {
-                var result = _companyService.Update(company);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteCompany")]

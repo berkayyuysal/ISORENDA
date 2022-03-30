@@ -21,67 +21,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddCourse")]
         public IActionResult AddCourse(Course course)
         {
-            try
+            var result = _courseService.Add(course);
+            if (!result.IsSuccess)
             {
-                var result = _courseService.Add(course);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateCourse")]
         public IActionResult UpdateCourse(Course course)
         {
-            try
+            var result = _courseService.Update(course);
+            if (!result.IsSuccess)
             {
-                var result = _courseService.Update(course);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteCourse")]
         public IActionResult DeleteCourse(Course course)
         {
-            try
+            var result = _courseService.Delete(course);
+            if (!result.IsSuccess)
             {
-                var result = _courseService.Delete(course);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result.Message);
-                }
-                return Ok(result);
+                return BadRequest(result.Message);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetCourses")]

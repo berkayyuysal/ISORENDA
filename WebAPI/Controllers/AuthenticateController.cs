@@ -21,63 +21,34 @@ namespace WebAPI.Controllers
         [HttpPost("AddAuthenticate")]
         public IActionResult AddAuthenticate(Authenticate authenticate)
         {
-            try
+            var result = _authenticateService.Add(authenticate);
+            if (!result.IsSuccess)
             {
-                var result = _authenticateService.Add(authenticate);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpPost("UpdateAuthenticate")]
         public IActionResult UpdateAuthenticate(Authenticate authenticate)
         {
-            try
+            var result = _authenticateService.Update(authenticate);
+            if (!result.IsSuccess)
             {
-                var result = _authenticateService.Update(authenticate);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Errors);
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("DeleteAuthenticate")]
         public IActionResult DeleteAuthenticate(Authenticate authenticate)
         {
-            try
+            var result = _authenticateService.Delete(authenticate);
+            if (!result.IsSuccess)
             {
-                var result = _authenticateService.Delete(authenticate);
-                if (!result.IsSuccess)
-                {
-                    return BadRequest(result);
-                }
-                return Ok(result);
+                return BadRequest(result);
             }
-            catch (Exception exception)
-            {
-                return BadRequest(exception);
-            }
+            return Ok(result);
         }
 
         [HttpGet("GetAllAuthenticates")]
