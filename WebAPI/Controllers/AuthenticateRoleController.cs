@@ -1,17 +1,19 @@
-﻿using BusinessLogicLayer.Abstract;
-using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogicLayer.Abstract;
+using Core.Aspects.Autofac.Transaction;
+using Core.Entities.Concrete;
+using Entities.DTOs;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Properties
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateRoleController : ControllerBase
+    public class AuthenticateRoleController : Controller
     {
         IAuthenticateRoleService _authenticateRoleService;
         public AuthenticateRoleController(IAuthenticateRoleService authenticateRoleService)
@@ -30,7 +32,7 @@ namespace WebAPI.Properties
             return Ok(result);
         }
 
-        [HttpPost("UpdateAuthenticate")]
+        [HttpPost("UpdateAuthenticateRole")]
         public IActionResult UpdateAuthenticateRole(AuthenticateRole authenticateRole)
         {
             var result = _authenticateRoleService.Update(authenticateRole);
@@ -41,7 +43,7 @@ namespace WebAPI.Properties
             return Ok(result);
         }
 
-        [HttpDelete("DeleteAuthenticate")]
+        [HttpDelete("DeleteAuthenticateRole")]
         public IActionResult DeleteAuthenticateRole(AuthenticateRole authenticateRole)
         {
             var result = _authenticateRoleService.Delete(authenticateRole);
@@ -52,7 +54,7 @@ namespace WebAPI.Properties
             return Ok(result);
         }
 
-        [HttpGet("GetAllAuthenticates")]
+        [HttpGet("GetAuthenticateRoles")]
         public IActionResult GetAuthenticateRoles()
         {
             var result = _authenticateRoleService.GetAuthenticateRoles();
@@ -63,7 +65,7 @@ namespace WebAPI.Properties
             return Ok(result);
         }
 
-        [HttpGet("GetAuthenticateById")]
+        [HttpGet("GetAuthenticateRoleById")]
         public IActionResult GetAuthenticateRoleById(Guid authenticateRoleId)
         {
             var result = _authenticateRoleService.GetAuthenticateRoleById(authenticateRoleId);

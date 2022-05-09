@@ -21,6 +21,7 @@ using BusinessLogicLayer.Concrete.CategoryProcesses;
 using BusinessLogicLayer.Concrete.PostProcesses;
 using BusinessLogicLayer.Concrete.LoginLogProcesses;
 using BusinessLogicLayer.Concrete.CityProcesses;
+using BusinessLogicLayer.Concrete.AuthenticateRoleProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -42,6 +43,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<FileManager>().As<IFileService>().SingleInstance();
             builder.RegisterType<EfFileDal>().As<IFileDal>().SingleInstance();
+
+            builder.RegisterType<AuthenticateRoleManager>().As<IAuthenticateRoleService>().SingleInstance();
+            builder.RegisterType<EfAuthenticateRoleDal>().As<IAuthenticateRoleDal>().SingleInstance();
 
             builder.RegisterType<LikeManager>().As<ILikeService>().SingleInstance();
             builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance();
