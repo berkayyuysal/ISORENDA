@@ -29,6 +29,16 @@
     <None Remove="Concrete\CityProcesses\" />
     <None Remove="Concrete\LoginLogProcesses\" />
     <None Remove="Concrete\CategoryCourseProcesses\" />
+    <None Remove="Concrete\BasketProcesses\" />
+    <None Remove="Concrete\ClientEducationInformationProcesses\" />
+    <None Remove="Concrete\CommentMentorProcesses\" />
+    <None Remove="Concrete\CommentPostProcesses\" />
+    <None Remove="Concrete\FileClientProcesses\" />
+    <None Remove="Concrete\FileMentorProcesses\" />
+    <None Remove="Concrete\MentorEducationInformationProcesses\" />
+    <None Remove="Concrete\OrderProcesses\" />
+    <None Remove="Concrete\ParentClientProcesses\" />
+    <None Remove="Concrete\RoleUserProcesses\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Concrete\UserProcesses\" />
@@ -42,5 +52,15 @@
     <Folder Include="Concrete\CityProcesses\" />
     <Folder Include="Concrete\LoginLogProcesses\" />
     <Folder Include="Concrete\CategoryCourseProcesses\" />
+    <Folder Include="Concrete\BasketProcesses\" />
+    <Folder Include="Concrete\ClientEducationInformationProcesses\" />
+    <Folder Include="Concrete\CommentMentorProcesses\" />
+    <Folder Include="Concrete\CommentPostProcesses\" />
+    <Folder Include="Concrete\FileClientProcesses\" />
+    <Folder Include="Concrete\FileMentorProcesses\" />
+    <Folder Include="Concrete\MentorEducationInformationProcesses\" />
+    <Folder Include="Concrete\OrderProcesses\" />
+    <Folder Include="Concrete\ParentClientProcesses\" />
+    <Folder Include="Concrete\RoleUserProcesses\" />
   </ItemGroup>
 </Project>

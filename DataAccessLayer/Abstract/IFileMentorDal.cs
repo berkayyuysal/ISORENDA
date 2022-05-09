@@ -4,7 +4,7 @@ using Core.Entities.Concrete;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface IBasketDal : IEntityRepository<Basket>
+    public interface IFileMentorDal : IEntityRepository<FileMentor>
     {
     }
 }
