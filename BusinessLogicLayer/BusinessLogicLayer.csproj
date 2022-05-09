@@ -28,6 +28,7 @@
     <None Remove="Concrete\PostProcesses\" />
     <None Remove="Concrete\CityProcesses\" />
     <None Remove="Concrete\LoginLogProcesses\" />
+    <None Remove="Concrete\CategoryCourseProcesses\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Concrete\UserProcesses\" />
@@ -40,5 +41,6 @@
     <Folder Include="Concrete\PostProcesses\" />
     <Folder Include="Concrete\CityProcesses\" />
     <Folder Include="Concrete\LoginLogProcesses\" />
+    <Folder Include="Concrete\CategoryCourseProcesses\" />
   </ItemGroup>
 </Project>
