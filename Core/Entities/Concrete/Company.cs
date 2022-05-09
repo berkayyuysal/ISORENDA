@@ -7,7 +7,6 @@ namespace Core.Entities.Concrete
     {
         public Company()
         {
-            BasketCompanies = new HashSet<BasketCompany>();
         }
 
         public Guid CompanyId { get; set; }
@@ -16,6 +15,5 @@ namespace Core.Entities.Concrete
         public string Name { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<BasketCompany> BasketCompanies { get; set; }
     }
 }
