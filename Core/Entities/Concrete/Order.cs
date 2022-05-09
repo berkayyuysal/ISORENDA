@@ -14,7 +14,6 @@ namespace Core.Entities.Concrete
         public DateTime UpdateDate { get; set; }
         public Guid UpdateUserId { get; set; }
 
-        public virtual BasketClient BasketClient { get; set; }
-        public virtual BasketCompany BasketCompany { get; set; }
+        public virtual Basket Basket{ get; set; }
     }
 }
