@@ -31,7 +31,7 @@ namespace BusinessLogicLayer.Concrete.AuthenticateProcesses
             var authenticateResult = _authenticateDal.GetOne(a => a.AuthenticateId == authenticate.AuthenticateId);
             if (!authenticateResult.Status)
             {
-                return new ErrorResult("Böyle bir adres bulunamamaktadır.");
+                return new ErrorResult("Böyle bir Authenticate bulunamamaktadır.");
             }
             return new SuccessResult();
         }

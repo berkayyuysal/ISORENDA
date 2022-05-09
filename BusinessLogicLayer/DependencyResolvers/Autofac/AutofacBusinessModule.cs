@@ -14,22 +14,6 @@ using BusinessLogicLayer.Concrete.AuthProcesses;
 using BusinessLogicLayer.Concrete.AddressProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateProcesses;
 using BusinessLogicLayer.Concrete.LikeProcesses;
-using BusinessLogicLayer.Concrete.CategoryProcesses;
-using BusinessLogicLayer.Concrete.PostProcesses;
-using BusinessLogicLayer.Concrete.LoginLogProcesses;
-using BusinessLogicLayer.Concrete.CityProcesses;
-using BusinessLogicLayer.Concrete.BasketProcesses;
-using BusinessLogicLayer.Concrete.CategoryCourseProcesses;
-using BusinessLogicLayer.Concrete.ClientEducationInformationProcesses;
-using BusinessLogicLayer.Concrete.CommentMentorProcesses;
-using BusinessLogicLayer.Concrete.CommentPostProcesses;
-using BusinessLogicLayer.Concrete.FileClientProcesses;
-using BusinessLogicLayer.Concrete.FileMentorProcesses;
-using BusinessLogicLayer.Concrete.MentorEducationInformationProcesses;
-using BusinessLogicLayer.Concrete.MentorProcesses;
-using BusinessLogicLayer.Concrete.OrderProcesses;
-using BusinessLogicLayer.Concrete.ParentClientProcesses;
-using BusinessLogicLayer.Concrete.RoleUserProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -55,21 +39,6 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
             builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
 
-            builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
-            builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
-
-            builder.RegisterType<ClientEducationInformationManager>().As<IClientEducationInformationService>().SingleInstance();
-            builder.RegisterType<EfClientEducationInformationDal>().As<IClientEducationInformationDal>().SingleInstance();
-
-            builder.RegisterType<ClientManager>().As<IClientService>().SingleInstance();
-            builder.RegisterType<EfClientDal>().As<IClientDal>().SingleInstance();
-
-            builder.RegisterType<CommentMentorManager>().As<ICommentMentorService>().SingleInstance();
-            builder.RegisterType<EfCommentMentorDal>().As<ICommentMentorDal>().SingleInstance();
-
-            builder.RegisterType<CommentPostManager>().As<ICommentPostService>().SingleInstance();
-            builder.RegisterType<EfCommentPostDal>().As<ICommentPostDal>().SingleInstance();
-
             builder.RegisterType<CompanyManager>().As<ICompanyService>().SingleInstance();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>().SingleInstance();
 
@@ -78,9 +47,6 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<DiscountManager>().As<IDiscountService>().SingleInstance();
             builder.RegisterType<EfDiscountDal>().As<IDiscountDal>().SingleInstance();
-
-            builder.RegisterType<FileClientManager>().As<IFileClientService>().SingleInstance();
-            builder.RegisterType<EfFileClientDal>().As<IFileClientDal>().SingleInstance();
 
             builder.RegisterType<FileMentorManager>().As<IFileMentorService>().SingleInstance();
             builder.RegisterType<EfFileMentorDal>().As<IFileMentorDal>().SingleInstance();
@@ -108,6 +74,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<PostManager>().As<IPostService>().SingleInstance();
             builder.RegisterType<EfPostDal>().As<IPostDal>().SingleInstance();
+
+            builder.RegisterType<CourseMentorClientManager>().As<ICourseMentorClientService>().SingleInstance();
+            builder.RegisterType<EfCourseMentorClientDal>().As<ICourseMentorClientDal>().SingleInstance();
 
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
