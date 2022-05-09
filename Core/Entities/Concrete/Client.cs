@@ -7,7 +7,7 @@ namespace Core.Entities.Concrete
     {
         public Client()
         {
-            BasketClients = new HashSet<BasketClient>();
+            Baskets = new HashSet<Basket>();
             ClientEducationInformations = new HashSet<ClientEducationInformation>();
             CourseMentorClients = new HashSet<CourseMentorClient>();
             FileAuthenticates = new HashSet<FileAuthenticate>();
@@ -26,7 +26,7 @@ namespace Core.Entities.Concrete
         public DateTime BirthDateOnIdentity { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<BasketClient> BasketClients { get; set; }
+        public virtual ICollection<Basket> Baskets { get; set; }
         public virtual ICollection<ClientEducationInformation> ClientEducationInformations { get; set; }
         public virtual ICollection<CourseMentorClient> CourseMentorClients { get; set; }
         public virtual ICollection<FileAuthenticate> FileAuthenticates { get; set; }

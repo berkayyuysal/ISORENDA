@@ -21,8 +21,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AuthenticateRole> AuthenticateRoles { get; set; }
         public virtual DbSet<Authenticate> Authenticates { get; set; }
-        public virtual DbSet<BasketClient> BasketClients { get; set; }
-        public virtual DbSet<BasketCompany> BasketCompanies { get; set; }
+        public virtual DbSet<Basket> Baskets { get; set; }
         public virtual DbSet<BasketCourseMentor> BasketCourseMentors { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryCourse> CategoryCourses { get; set; }
@@ -136,49 +135,17 @@ namespace DataAccessLayer.Concrete.EntityFramework
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<BasketClient>(entity =>
-            {
-                entity.HasKey(e => e.BasketClientId);
-
-                entity.Property(e => e.BasketClientId).HasDefaultValueSql("(newsequentialid())");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.BasketClients)
-                    .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_BasketClients_Clients");
-            });
-
-            modelBuilder.Entity<BasketCompany>(entity =>
-            {
-                entity.HasKey(e => e.BasketCompanyId);
-
-                entity.Property(e => e.BasketCompanyId).HasDefaultValueSql("(newsequentialid())");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.BasketCompanies)
-                    .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_BasketCompanies_Companies");
-            });
-
             modelBuilder.Entity<BasketCourseMentor>(entity =>
             {
                 entity.HasKey(e => e.BasketCourseMentorId);
 
                 entity.Property(e => e.BasketCourseMentorId).HasDefaultValueSql("(newsequentialid())");
 
-                entity.HasOne(d => d.BasketClient)
+                entity.HasOne(d => d.Basket)
                     .WithMany(p => p.BasketCourseMentors)
                     .HasForeignKey(d => d.BasketId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_BasketCourseMentors_BasketClients");
-
-                entity.HasOne(d => d.BasketCompany)
-                    .WithMany(p => p.BasketCourseMentors)
-                    .HasForeignKey(d => d.BasketId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_BasketCourseMentors_BasketCompanies");
+                    .HasConstraintName("FK_BasketCourseMentors_Baskets");
 
                 entity.HasOne(d => d.CourseMentor)
                     .WithMany(p => p.BasketCourseMentors)
@@ -657,17 +624,11 @@ namespace DataAccessLayer.Concrete.EntityFramework
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.BasketClient)
+                entity.HasOne(d => d.Basket)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.BasketId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orders_BasketClients");
-
-                entity.HasOne(d => d.BasketCompany)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.BasketId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orders_BasketCompanies");
+                    .HasConstraintName("FK_Orders_Baskets");
             });
 
             modelBuilder.Entity<ParentClient>(entity =>
