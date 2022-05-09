@@ -22,6 +22,9 @@ using BusinessLogicLayer.Concrete.PostProcesses;
 using BusinessLogicLayer.Concrete.LoginLogProcesses;
 using BusinessLogicLayer.Concrete.CityProcesses;
 using BusinessLogicLayer.Concrete.AuthenticateRoleProcesses;
+using BusinessLogicLayer.Concrete.BasketCourseMentorProcesses;
+using BusinessLogicLayer.Concrete.CourseMentorClientProcesses;
+using BusinessLogicLayer.Concrete.FileAuthenticateProcesses;
 
 namespace BusinessLogicLayer.DependencyResolvers.Autofac
 {
@@ -48,10 +51,19 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
             builder.RegisterType<EfAuthenticateRoleDal>().As<IAuthenticateRoleDal>().SingleInstance();
 
             builder.RegisterType<LikeManager>().As<ILikeService>().SingleInstance();
-            builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance();
+            builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance(); 
+
+            builder.RegisterType<DiscountCourseMentorManager>().As<IDiscountCourseMentorService>().SingleInstance();
+            builder.RegisterType<EfDiscountCourseMentorDal>().As<IDiscountCourseMentorDal>().SingleInstance(); 
+
+            builder.RegisterType<BasketCourseMentorManager>().As<IBasketCourseMentorService>().SingleInstance();
+            builder.RegisterType<EfBasketCourseMentorDal>().As<IBasketCourseMentorDal>().SingleInstance();
 
             builder.RegisterType<CourseManager>().As<ICourseService>().SingleInstance();
-            builder.RegisterType<EfCourseDal>().As<ICourseDal>().SingleInstance();
+            builder.RegisterType<EfCourseDal>().As<ICourseDal>().SingleInstance(); 
+                
+            builder.RegisterType<FileAuthenticateManager>().As<IFileAuthenticateService>().SingleInstance();
+            builder.RegisterType<EfFileAuthenticateDal>().As<IFileAuthenticateDal>().SingleInstance(); 
 
             builder.RegisterType<CompanyManager>().As<ICompanyService>().SingleInstance();
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>().SingleInstance();
@@ -73,6 +85,9 @@ namespace BusinessLogicLayer.DependencyResolvers.Autofac
 
             builder.RegisterType<PostManager>().As<IPostService>().SingleInstance();
             builder.RegisterType<EfPostDal>().As<IPostDal>().SingleInstance();
+
+            builder.RegisterType<CourseMentorClientManager>().As<ICourseMentorClientService>().SingleInstance();
+            builder.RegisterType<EfCourseMentorClientDal>().As<ICourseMentorClientDal>().SingleInstance();
 
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
