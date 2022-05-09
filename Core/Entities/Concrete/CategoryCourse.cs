@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Core.Entities.Concrete
 {
     public class CategoryCourse : IEntity
     {
-        public CategoryCourse()
-        {
-        }
         public Guid CategoryCourseId { get; set; }
         public Guid CategoryId { get; set; }
         public Guid CourseId { get; set; }
