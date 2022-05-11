@@ -21,7 +21,7 @@ namespace Core.Entities.Concrete
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public int Gender { get; set; }
-        public bool MaritalStatus { get; set; }
+        public bool MartialStatus { get; set; }
         public DateTime RealBirthDate { get; set; }
         public DateTime BirthDateOnIdentity { get; set; }
 
