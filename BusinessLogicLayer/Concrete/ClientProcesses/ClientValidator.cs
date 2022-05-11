@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.Concrete.ClientProcesses
             RuleFor(c => c.LastName).NotEmpty();
             RuleFor(c => c.IdentityNumber).NotEmpty();
             RuleFor(c => c.Gender).NotNull();
-            RuleFor(c => c.MaritalStatus).NotNull();
+            RuleFor(c => c.MartialStatus).NotNull();
             RuleFor(c => c.RealBirthDate).NotEmpty();
             RuleFor(c => c.BirthDateOnIdentity).NotEmpty();
         }

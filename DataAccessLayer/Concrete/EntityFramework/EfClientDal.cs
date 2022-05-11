@@ -30,7 +30,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
                     MiddleName = client.MiddleName,
                     LastName = client.LastName,
                     Gender = client.Gender,
-                    MaritalStatus = client.MaritalStatus,
+                    MartialStatus = client.MartialStatus,
                     RealBirthDate = client.RealBirthDate,
                     BirthDateOnIdentity = client.BirthDateOnIdentity,
                     User = user
@@ -57,7 +57,7 @@ namespace DataAccessLayer.Concrete.EntityFramework
                                  MiddleName = client.MiddleName,
                                  LastName = client.LastName,
                                  Gender = client.Gender,
-                                 MaritalStatus = client.MaritalStatus,
+                                 MartialStatus = client.MartialStatus,
                                  RealBirthDate = client.RealBirthDate,
                                  BirthDateOnIdentity = client.BirthDateOnIdentity,
                                  User = user
